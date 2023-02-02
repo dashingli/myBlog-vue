@@ -1,14 +1,28 @@
 <template>
   <div>
-    <Icon name="home" />
+    <Pager
+      v-on:changeCurrent="handleChangeCurrent"
+      :current="current"
+      :total="201"
+    ></Pager>
   </div>
 </template>
 
 <script lang="js">
-import Icon from './components/Icon.vue'
+import Pager from './components/pager.vue'
 export default {
   components:{
-    Icon
+    Pager
+  },
+  data(){
+    return {
+      current:1
+    }
+  },
+  methods:{
+    handleChangeCurrent(val){
+      this.current = val;
+    }
   }
 }
 </script>
