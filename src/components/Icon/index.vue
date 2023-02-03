@@ -22,6 +22,7 @@ const nameMap = {
     empty: "iconempty",
     chat: "iconliuyan",
 }
+export const nameMapKeys = Object.keys(nameMap);
 export default {
     props:{
         name:{

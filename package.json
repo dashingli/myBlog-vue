@@ -5,7 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test:Avater": "npx vue serve --open  ./src/components/Avater/test.vue",
+    "test:Icon": "npx vue serve --open ./src/components/Icon/test.vue",
+    "test:Pager": "npx vue serve --open ./src/components/Pager/test.vue"
   },
   "dependencies": {
     "core-js": "^3.6.5",

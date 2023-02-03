@@ -1,25 +1,28 @@
 <template>
-  <div>
+  <div class="pager-wrapper">
     <Pager
       v-on:changeCurrent="handleChangeCurrent"
       :current="current"
-      :total="201"
+      :total="200"
+      :pageTotal="10"
     ></Pager>
   </div>
 </template>
 
 <script lang="js">
-import Pager from './components/Pager'
+import Pager from '@/components/Pager';
+import "@/style/reset.less";
+import "@/style/var.less";
 export default {
-  components:{
-    Pager
-  },
-  data(){
+    components:{
+        Pager
+    },
+    data(){
     return {
       current:1
     }
   },
-  methods:{
+    methods:{
     handleChangeCurrent(val){
       this.current = val;
     }
@@ -27,9 +30,4 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.iconfont {
-  font-size: 26px;
-  color: red;
-}
-</style>
+<style lang="less" scoped></style>
