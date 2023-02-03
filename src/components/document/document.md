@@ -35,3 +35,28 @@ npm run test:Avater
 ```bash
 npm run test:Icon
 ```
+
+# Pager 组件(分页)
+
+## 预览
+
+![pager组件](./pagerPreview.png)
+
+## 参数
+
+| 参数          | 类型   | 是否必填 | 是否有默认值 | 参数意义       |
+| ------------- | ------ | -------- | ------------ | -------------- |
+| current       | Number | 必填     | 无默认值     | 当前所处页码   |
+| total         | Number | 必填     | 无默认值     | 总信息量       |
+| pageTotal     | Number | 非必填   | 有默认值:10  | 每页信息量     |
+| visibleNumber | Number | 非必填   | 有默认值:5   | 一排可见页码数 |
+
+## 抛出事件
+
+| 事件名        | 含义                                                | 事件参数      | 参数类型 |
+| ------------- | --------------------------------------------------- | ------------- | -------- |
+| changeCurrent | 用户点击页码(页码非当前页码)时,通知父组件改变其数据 | currentNumber | Number   |
+
+```bash
+npm run test:Pager
+```

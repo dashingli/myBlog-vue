@@ -1,9 +1,5 @@
 <template>
   <div class="pager-wrapper">
-    {{ "总页数" + calculatePage }}
-    {{ "当前页码" + current }}
-    {{ "最小页数" + visibleMin }}
-    {{ "最大页数" + visibleMax }}
     <a @click="changeCurrent(1)" :class="{ disabled: current === 1 }">首页</a>
     <a @click="changeCurrent(current - 1)" :class="{ disabled: current === 1 }"
       >上一页</a
@@ -45,6 +41,11 @@ export default {
         pageTotal:{
             type:Number,
             default:10
+        },
+        //可见页码数
+        visibleNumber:{
+          type:Number,
+          default:5
         }
     },
     computed:{
@@ -54,7 +55,7 @@ export default {
         },
         //得到显示最小页数
         visibleMin(){
-            let min = this.current - Math.ceil(this.pageTotal/2);
+            let min = this.current - Math.ceil(this.visibleNumber/2);
             if(min < 1){
                 min = 1
             }
@@ -62,7 +63,7 @@ export default {
         },
         //得到显示最大页数
         visibleMax(){
-            let max = this.visibleMin + this.pageTotal -1;
+            let max = this.visibleMin + this.visibleNumber -1;
             if(max > this.calculatePage){
                 max = this.calculatePage;
             }
@@ -99,6 +100,7 @@ export default {
 .pager-wrapper {
   display: flex;
   justify-content: center;
+  margin-top: 100px;
 }
 a {
   padding: 5px;
