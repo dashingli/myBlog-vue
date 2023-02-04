@@ -2,6 +2,7 @@
   <div class="pager-wrapper">
     <Pager
       v-on:changeCurrent="handleChangeCurrent"
+      v-on:changeJump="handleChangeJump"
       :current="current"
       :total="200"
       :pageTotal="10"
@@ -24,6 +25,9 @@ export default {
   },
     methods:{
     handleChangeCurrent(val){
+      this.current = val;
+    },
+    handleChangeJump(val){
       this.current = val;
     }
   }

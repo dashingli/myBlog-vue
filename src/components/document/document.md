@@ -56,6 +56,7 @@ npm run test:Icon
 | 事件名        | 含义                                                | 事件参数      | 参数类型 |
 | ------------- | --------------------------------------------------- | ------------- | -------- |
 | changeCurrent | 用户点击页码(页码非当前页码)时,通知父组件改变其数据 | currentNumber | Number   |
+| changeJump    | 用户在页码框输入,点击跳转页码,通知父组件改变其数据  | jumpNumber    | Number   |
 
 ```bash
 npm run test:Pager

@@ -21,6 +21,12 @@
       :class="{ disabled: current === calculatePage }"
       >末尾</a
     >
+    <div class="jump-wrapper">
+      <span>共{{ calculatePage }}页,到第</span>
+      <input type="number" :max="calculatePage" :min="1" ref="jumpNumber" />
+      <span>页</span>
+    </div>
+    <a @click="clickJump">跳转</a>
   </div>
 </template>
 
@@ -90,6 +96,19 @@ export default {
                 return
             }
             this.$emit('changeCurrent', currentNumber)
+        },
+        clickJump(){
+          const jumpNumber = parseInt(this.$refs.jumpNumber.value);
+          console.log(jumpNumber)
+          console.log(typeof jumpNumber)
+          if(jumpNumber < 1){
+            return
+          }
+          if(jumpNumber > this.calculatePage){
+            return
+          }
+          this.$emit('changeJump', jumpNumber);
+
         }
     }
 }
@@ -101,6 +120,11 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  .jump-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+  }
 }
 a {
   padding: 5px;
