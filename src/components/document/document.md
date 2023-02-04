@@ -61,3 +61,21 @@ npm run test:Icon
 ```bash
 npm run test:Pager
 ```
+
+# Empty 组件
+
+# Empty
+
+<img src="http://mdrs.yuanjin.tech/img/20201130165011.png" alt="image-20201130165011681" style="zoom:50%;" />
+
+该组件需要在外层容器中横向垂直居中
+
+## 属性
+
+| 属性名 | 含义       | 类型   | 必填 | 默认值   |
+| ------ | ---------- | ------ | ---- | -------- |
+| text   | 显示的文字 | String | 否   | "无数据" |
+
+```bash
+npm run test:Empty
+```

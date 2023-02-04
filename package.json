@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "test:Avater": "npx vue serve --open  ./src/components/Avater/test.vue",
     "test:Icon": "npx vue serve --open ./src/components/Icon/test.vue",
-    "test:Pager": "npx vue serve --open ./src/components/Pager/test.vue"
+    "test:Pager": "npx vue serve --open ./src/components/Pager/test.vue",
+    "test:Empty": "npx vue serve --open ./src/components/Empty/test.vue"
   },
   "dependencies": {
     "core-js": "^3.6.5",
