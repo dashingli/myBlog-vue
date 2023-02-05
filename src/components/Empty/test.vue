@@ -16,5 +16,9 @@ export default {
 .Empty-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  border: 1px solid red;
 }
 </style>

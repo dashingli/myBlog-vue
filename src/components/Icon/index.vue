@@ -34,7 +34,7 @@ export default {
         fontClass(){
             return nameMap[this.name];
         }
-    }
+    },
 }
 </script>
 
