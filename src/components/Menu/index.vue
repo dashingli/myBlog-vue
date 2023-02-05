@@ -1,22 +1,22 @@
 <template>
   <div class="menu-wrapper">
-    <a href="/">
+    <a href="/" :class="{ selected: isSelected('/') }">
       <Icon name="home"></Icon>
       首页
     </a>
-    <a href="/blog">
+    <a href="/blog" :class="{ selected: isSelected('/blog') }">
       <Icon name="blog"></Icon>
       文章
     </a>
-    <a href="/about">
+    <a href="/about" :class="{ selected: isSelected('/about') }">
       <Icon name="about"></Icon>
       关于我
     </a>
-    <a href="/project">
+    <a href="/project" :class="{ selected: isSelected('/project') }">
       <Icon name="code"></Icon>
       项目&效果
     </a>
-    <a href="/message">
+    <a href="/message" :class="{ selected: isSelected('/message') }">
       <Icon name="chat"></Icon>
       项目&效果
     </a>
@@ -29,6 +29,14 @@ import '@/style/reset.less'
 export default {
     components:{
         Icon
+    },
+    methods: {
+        isSelected(local){
+            if(local === window.location.pathname){
+                return true;
+            }
+            return false;
+        }
     }
 }
 </script>
@@ -39,6 +47,10 @@ export default {
   display: inline-flex;
   flex-direction: column;
   border-color: transparent;
+  .selected {
+    background-color: @gray;
+    color: white;
+  }
   a {
     padding: 10px 40px 10px 20px;
     color: @gray;
