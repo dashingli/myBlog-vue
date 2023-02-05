@@ -1,25 +1,25 @@
 <template>
   <div class="menu-wrapper">
-    <a href="/" :class="{ selected: isSelected('/') }">
+    <router-link to="/" exact active-class="selected">
       <Icon name="home"></Icon>
       首页
-    </a>
-    <a href="/blog" :class="{ selected: isSelected('/blog') }">
+    </router-link>
+    <router-link to="/blog" active-class="selected">
       <Icon name="blog"></Icon>
       文章
-    </a>
-    <a href="/about" :class="{ selected: isSelected('/about') }">
+    </router-link>
+    <router-link to="/about" exact active-class="selected">
       <Icon name="about"></Icon>
       关于我
-    </a>
-    <a href="/project" :class="{ selected: isSelected('/project') }">
+    </router-link>
+    <router-link to="/project" exact active-class="selected">
       <Icon name="code"></Icon>
       项目&效果
-    </a>
-    <a href="/message" :class="{ selected: isSelected('/message') }">
+    </router-link>
+    <router-link to="/message" exact active-class="selected">
       <Icon name="chat"></Icon>
-      项目&效果
-    </a>
+      留言
+    </router-link>
   </div>
 </template>
 
@@ -30,14 +30,14 @@ export default {
     components:{
         Icon
     },
-    methods: {
-        isSelected(local){
-            if(local === window.location.pathname){
-                return true;
-            }
-            return false;
-        }
-    }
+    // methods: {
+    //     isSelected(local){
+    //         if(local === window.location.pathname){
+    //             return true;
+    //         }
+    //         return false;
+    //     }
+    // }
 }
 </script>
 
@@ -45,6 +45,8 @@ export default {
 @import "~@/style/var.less";
 .menu-wrapper {
   display: inline-flex;
+  width: 100%;
+  margin-top: 10px;
   flex-direction: column;
   border-color: transparent;
   .selected {
@@ -54,6 +56,7 @@ export default {
   a {
     padding: 10px 40px 10px 20px;
     color: @gray;
+    text-align: center;
     &:hover {
       background-color: @gray;
       color: white;

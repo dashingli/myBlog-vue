@@ -79,3 +79,123 @@ npm run test:Pager
 ```bash
 npm run test:Empty
 ```
+
+# ImageLoader
+
+该组件可以实现一个渐进式图片
+
+![alt tag](http://mdrs.yuanjin.tech/img/20201115132049.gif)
+
+## 属性
+
+| 属性名      | 含义                                         | 类型   | 必填 | 默认值 |
+| ----------- | -------------------------------------------- | ------ | ---- | ------ |
+| src         | 原始图片的路径                               | String | 是   | 无     |
+| placeholder | 原始图片加载完成前的占位图片                 | String | 是   | 无     |
+| duration    | 原始图片加载完成后，切换到原始图经过的毫秒数 | Number | 否   | 500    |
+
+## 事件
+
+| 事件名      | 含义                   | 事件参数 | 参数类型 |
+| ----------- | ---------------------- | -------- | -------- |
+| handleImage | 原始图片加载完成后触发 | 无       | 无       |
+
+## 启动测试
+
+```bash
+npm run test:ImageLoader
+```
+
+# Contact
+
+<img src="./contactPreview.png" alt="iShot2020-11-30下午04.55.47" style="zoom:40%;" />
+
+该组件需要横向撑满容器，背景色透明
+
+## 启动测试
+
+```bash
+npm run test:Contact
+```
+
+# Menu
+
+<img src="http://mdrs.yuanjin.tech/img/20201130195147.png" alt="image-20201130195147086" style="zoom:33%;" />
+
+该组件需要横向撑满容器，背景色透明
+
+每个菜单的信息如下：
+
+> **首页**
+>
+> 链接地址：/
+>
+> 选中条件：路径等于 /
+>
+> **文章**
+>
+> 链接地址：/blog
+>
+> 选中条件：路径以`/blog`开头
+>
+> **关于我**
+>
+> 链接地址：/about
+>
+> 选中条件：路径等于`/about`
+>
+> **项目&效果**
+>
+> 链接地址：/project
+>
+> 选中条件：路径等于`/project`
+>
+> **留言板**
+>
+> 链接地址：/message
+>
+> 选中条件：路径等于`/message`
+
+## 启动测试
+
+```bash
+npm run test:Menu
+```
+
+# SiteAside
+
+<img src="./asidePreview.png" alt="image-20201130200148681" style="zoom:33%;" />
+
+网站侧边栏
+
+宽度和高度撑满外层容器
+
+```bash
+npm run test:SiteAside
+```
+
+# Layout
+
+使用示例：
+
+```html
+<Layout>
+  <template #left>
+    <div>左边栏区域，宽度适应内容，溢出隐藏</div>
+  </template>
+  <div>主区域，宽度占满剩余空间，溢出隐藏</div>
+  <template #right>
+    <div>右边栏区域，宽度适应内容，溢出隐藏</div>
+  </template>
+</Layout>
+```
+
+<img src="http://mdrs.yuanjin.tech/img/20201202154014.png" alt="image-20201202154014492" style="zoom:40%;" />
+
+## 插槽
+
+| 插槽名 | 含义       |
+| ------ | ---------- |
+| main   | 中间主区域 |
+| left   | 左边栏     |
+| right  | 右边栏     |

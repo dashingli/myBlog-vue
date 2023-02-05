@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="avater-wrapper">
     <img
       :src="url"
       class="avatar-img"
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.avater-wrapper {
+  margin-top: 20px;
+}
 .avatar-img {
   border-radius: 50%;
   object-fit: cover;

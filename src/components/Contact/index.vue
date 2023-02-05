@@ -41,20 +41,25 @@ export default {
 .Contact-wrapper {
   border: 1px solid;
   display: inline-flex;
+  gap: 10px;
+  margin-bottom: 50px;
   flex-direction: column;
   border-color: transparent;
+  margin-top: 40px;
 }
 a {
   color: @gray;
   position: relative;
-  font-size: 2em;
+  font-size: 1.15em;
+  padding-left: 10px;
+  padding-right: 50px;
   .img-wrapper {
     display: none;
     transform: scale(0);
   }
   img {
     width: 300px;
-    height: 300px;
+    height: 400px;
     object-fit: cover;
   }
   &:hover {
@@ -63,7 +68,7 @@ a {
       display: block;
       transform: scale(1);
       position: absolute;
-      top: -300px;
+      top: -400px;
       left: -30px;
     }
   }

@@ -1,11 +1,8 @@
 <template>
-  <div class="app-wrapper">
+  <div class="test-wrapper">
     <Layout>
       <template v-slot:left>
         <SiteAside></SiteAside>
-      </template>
-      <template v-slot:main>
-        <router-view></router-view>
       </template>
     </Layout>
   </div>
@@ -15,10 +12,10 @@
 import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
 export default {
-  components:{
-    Layout,
-    SiteAside,
-},
+    components:{
+        Layout,
+        SiteAside,
+    }
 }
 </script>
 

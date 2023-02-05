@@ -11,11 +11,15 @@
     "test:Pager": "npx vue serve --open ./src/components/Pager/test.vue",
     "test:Empty": "npx vue serve --open ./src/components/Empty/test.vue",
     "test:ImageLoader": "npx vue serve --open ./src/components/ImageLoader/test.vue",
-    "test:Contact": "npx vue serve --open ./src/components/Contact/test.vue"
+    "test:Contact": "npx vue serve --open ./src/components/Contact/test.vue",
+    "test:Menu": "npx vue serve --open ./src/components/Menu/test.vue",
+    "test:SiteAside": "npx vue serve --open ./src/components/SiteAside/test.vue",
+    "test:Layout": "npx vue serve --open ./src/components/Layout/test.vue"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.6.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.8",
