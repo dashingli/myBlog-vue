@@ -1,6 +1,14 @@
 <template>
   <div class="home-wrapper">
     <div>首页</div>
+    <ul v-for="bannerItem in bannerList" :key="bannerItem.id">
+      <li>
+        <h1>{{ bannerItem.title }}</h1>
+        <h2>{{ bannerItem.description }}</h2>
+        <img :src="bannerItem.midImg" />
+        <img :src="bannerItem.midImg" />
+      </li>
+    </ul>
     <Message
       :isShow="isMessage"
       :duration="duration"
@@ -21,20 +29,31 @@ export default {
         isMessage : false,
         duration:1000,
         mesType : 'success',
-        msgContent:'获取消息成功'
+        msgContent:'获取消息成功',
+        bannerList:null
       }
     },
   components:{
     Message
   },
+  async created(){
+    const res = await getBanner();
+    if(res.code !== 0){
+      this.mesType = 'error';
+      this.msgContent = '获取消息失败'
+    }else{
+      this.mesType = 'success';
+      this.msgContent = '获取消息成功';
+      this.bannerList = res.data;
+
+    }
+    this.isMessage = true
+    setTimeout(()=>(this.isMessage = false),this.duration)
+
+  },
+
   methods:{
-        async showMsg(){
-            const res = await getBanner();
-            console.log(res);
-            if(res === false){
-              this.mesType = 'error';
-              this.msgContent = '消息获取失败'
-            }
+       showMsg(){
             this.isMessage = true
             setTimeout(()=>(this.isMessage = false),this.duration)
         }
@@ -45,5 +64,7 @@ export default {
 <style lang="less" scoped>
 .home-wrapper {
   position: relative;
+  height: 100vh;
+  overflow: auto;
 }
 </style>

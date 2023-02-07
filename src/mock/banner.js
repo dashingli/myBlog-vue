@@ -5,7 +5,7 @@ Mock.mock("/api/banner", "get", {
   data: [
     {
       id: "0",
-      midImg: "http://mdrs.yuanjin.tech/img/20201031141507.jpg",
+      midImg: Mock.Random.image("300x600", "#b21e00"),
       bigImg: "http://mdrs.yuanjin.tech/img/20201031141350.jpg",
       title: "凛冬将至",
       description: "人唯有恐惧的时候方能勇敢",
@@ -19,6 +19,20 @@ Mock.mock("/api/banner", "get", {
     },
     {
       id: "3",
+      midImg: "http://mdrs.yuanjin.tech/img/20201031204401.jpg",
+      bigImg: "http://mdrs.yuanjin.tech/img/20201031204403.jpg",
+      title: "听我怒吼",
+      description: "兰尼斯特有债必偿",
+    },
+    {
+      id: "4",
+      midImg: "http://mdrs.yuanjin.tech/img/20201031204401.jpg",
+      bigImg: "http://mdrs.yuanjin.tech/img/20201031204403.jpg",
+      title: "听我怒吼",
+      description: "兰尼斯特有债必偿",
+    },
+    {
+      id: "5",
       midImg: "http://mdrs.yuanjin.tech/img/20201031204401.jpg",
       bigImg: "http://mdrs.yuanjin.tech/img/20201031204403.jpg",
       title: "听我怒吼",
