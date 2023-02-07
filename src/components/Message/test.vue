@@ -1,7 +1,10 @@
 <template>
-  <div class="home-wrapper">
-    <div>首页</div>
-    <Message :isShow="isMessage" :duration="duration"></Message>
+  <div class="test-wrapper">
+    <Message
+      mesType="success"
+      :isShow="isMessage"
+      :duration="duration"
+    ></Message>
     <button @click="showMsg">发送</button>
   </div>
 </template>
@@ -9,16 +12,16 @@
 <script lang="js">
 import Message from '@/components/Message'
 export default {
-  data(){
+    data(){
       return {
         isMessage : false,
         duration:5000
       }
     },
-  components:{
-    Message
-  },
-  methods:{
+    components: {
+        Message
+    },
+    methods:{
         showMsg(){
             this.isMessage = true
             setTimeout(()=>(this.isMessage = false),this.duration)
@@ -28,7 +31,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.home-wrapper {
+.test-wrapper {
+  width: 500px;
+  height: 500px;
+  border: 1px solid red;
   position: relative;
 }
 </style>

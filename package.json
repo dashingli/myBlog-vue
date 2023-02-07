@@ -14,10 +14,13 @@
     "test:Contact": "npx vue serve --open ./src/components/Contact/test.vue",
     "test:Menu": "npx vue serve --open ./src/components/Menu/test.vue",
     "test:SiteAside": "npx vue serve --open ./src/components/SiteAside/test.vue",
-    "test:Layout": "npx vue serve --open ./src/components/Layout/test.vue"
+    "test:Layout": "npx vue serve --open ./src/components/Layout/test.vue",
+    "test:Message": "npx vue serve --open ./src/components/Message/test.vue"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "core-js": "^3.6.5",
+    "mockjs": "^1.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.6.5"
   },

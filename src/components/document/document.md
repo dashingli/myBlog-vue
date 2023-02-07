@@ -199,3 +199,39 @@ npm run test:SiteAside
 | main   | 中间主区域 |
 | left   | 左边栏     |
 | right  | 右边栏     |
+
+# Message
+
+>  消息弹出小组件
+
+## props
+
+| 属性名     | 类型   | 默认值   | 是否必须 | 含义                                |
+| ---------- | ------ | -------- | -------- | ----------------------------------- |
+| mesType    | String | success  | /        | 弹窗类型(success  info  warn error) |
+| msgContent | String | 消息成功 | /        | 弹窗文字内容                        |
+| duration   | Number | /        | 必须     | 弹窗多久消失                        |
+
+父组件使用方法:
+
+```vue
+//模版部分
+<Message :isShow="isMessage" :duration="duration"></Message>
+<button @click="showMsg">发送</button>
+data部分
+  data(){
+      return {
+        isMessage : false,
+        duration:5000
+      }
+    }
+methods部分
+        showMsg(){
+            this.isMessage = true
+            setTimeout(()=>(this.isMessage = false),this.duration)
+        }
+//css:Message组件的父容器应设置为相对定位 即可居中
+  position: relative;
+
+```
+
