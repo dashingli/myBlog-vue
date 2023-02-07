@@ -1,6 +1,5 @@
-import instance from "./requests";
+import { instance } from "./requests";
 export async function getBanner() {
-  console.log("getBanner");
-  //   console.log(await instance.get("/api/banner"));
+  console.log(await instance.get("/api/banner"));
   return await instance.get("/api/banner");
 }

@@ -4,7 +4,7 @@ Mock.mock("/api/banner", "get", {
   msg: "",
   data: [
     {
-      id: "1",
+      id: "0",
       midImg: "http://mdrs.yuanjin.tech/img/20201031141507.jpg",
       bigImg: "http://mdrs.yuanjin.tech/img/20201031141350.jpg",
       title: "凛冬将至",
