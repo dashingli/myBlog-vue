@@ -1,5 +1,6 @@
 <template>
   <div class="home-wrapper" ref="homeWrapper">
+    <div class="banner-wrapper"></div>
     <div
       class="uparrow-wrapper"
       v-show="index > 1"
@@ -41,6 +42,7 @@ export default {
   mounted(){
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
     window.addEventListener('wheel',this.wheelChanged);
+    window.addEventListener('resize',this.resizeChanged);
   },
   destroyed(){
     window.removeEventListener('wheel',this.wheelChanged);
@@ -56,7 +58,7 @@ export default {
         bannerList:[],
         //index 表示展示的是第几个数据
         index:1,
-        //组件容器高度
+        //当前组件容器高度
         wrapperHeight:0,
         //是否正处于滚动中
         isWheel : false,
@@ -81,6 +83,9 @@ export default {
       indexChanged(val){
         this.index = val
       },
+      resizeChanged(){
+      this.wrapperHeight =  this.$refs.homeWrapper.clientHeight;
+    }
     },
   components:{
     Message,
@@ -111,6 +116,11 @@ export default {
   height: 100vh;
   overflow: auto;
   @iconFontSize: 2em;
+  .banner-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
   .index-wrapper {
     position: absolute;
     top: 50%;
