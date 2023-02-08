@@ -49,13 +49,16 @@ export default {
 <style lang="less" scoped>
 .image-loader-wrapper {
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-  width: 500px;
 }
 .placeholder {
   filter: blur(5px);

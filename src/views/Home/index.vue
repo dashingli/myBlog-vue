@@ -1,6 +1,20 @@
 <template>
   <div class="home-wrapper" ref="homeWrapper">
-    <div class="banner-wrapper"></div>
+    <div class="banner-wrapper">
+      <div
+        v-for="(bannerItem, i) in bannerList"
+        :key="i"
+        class="banner-item"
+        :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
+      >
+        <ImageLoader
+          :src="bannerItem.bigImg"
+          :placeholder="bannerItem.midImg"
+          class="image-loader"
+        ></ImageLoader>
+        <!-- <img :src="bannerItem.bigImg" /> -->
+      </div>
+    </div>
     <div
       class="uparrow-wrapper"
       v-show="index > 1"
@@ -38,7 +52,13 @@
 import Message from '@/components/Message'
 import {getBanner} from '@/api/banner.js'
 import Icon from '@/components/Icon'
+import ImageLoader from '@/components/ImageLoader'
 export default {
+  computed:{
+    caculMarginTop(){
+      return -((this.index - 1) * this.wrapperHeight)
+    }
+  },
   mounted(){
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
     window.addEventListener('wheel',this.wheelChanged);
@@ -62,6 +82,8 @@ export default {
         wrapperHeight:0,
         //是否正处于滚动中
         isWheel : false,
+        //marginTop
+        marginTop:0
       }
     },
     methods:{
@@ -89,7 +111,8 @@ export default {
     },
   components:{
     Message,
-    Icon
+    Icon,
+    ImageLoader
   },
   //注入前 获取bannerList 判断data.code => 显示消息类型
   async created(){
@@ -114,12 +137,19 @@ export default {
 .home-wrapper {
   position: relative;
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   @iconFontSize: 2em;
   .banner-wrapper {
-    width: 100%;
-    height: 100%;
-    background-color: black;
+    .banner-item {
+      width: 100%;
+      height: 100%;
+      transition: margin-top 0.5s linear;
+      .image-loader {
+        display: block;
+        width: 100%;
+        height: 100vh;
+      }
+    }
   }
   .index-wrapper {
     position: absolute;
