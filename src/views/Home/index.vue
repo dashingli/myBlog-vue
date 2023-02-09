@@ -13,7 +13,9 @@
             top: i * wrapperHeight + wrapperHeight / 2 + 'px',
           }"
         >
-          <h1 ref="titleRef">{{ bannerItem.title }}</h1>
+          <h1 ref="titleRef">
+            {{ bannerItem.title }}
+          </h1>
           <h2 ref="desc">{{ bannerItem.description }}</h2>
         </div>
 
@@ -69,6 +71,8 @@ export default {
     }
   },
   mounted(){
+    console.log(this.$refs.titleRef)
+    console.log(this.$refs)
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
     window.addEventListener('wheel',this.wheelChanged);
     window.addEventListener('resize',this.resizeChanged);
@@ -162,10 +166,6 @@ export default {
       h1 {
         font-weight: @fontWeight;
         margin-bottom: 10px;
-        white-space: nowrap;
-        width: 0;
-        overflow: hidden;
-        transition: width 1s linear;
       }
       h2 {
         font-weight: @fontWeight;
