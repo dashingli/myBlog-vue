@@ -4,13 +4,6 @@ Mock.mock("/api/banner", "get", {
   msg: "",
   data: [
     {
-      id: "0",
-      midImg: Mock.Random.image("300x600", "#b21e00"),
-      bigImg: "http://mdrs.yuanjin.tech/img/20201031141350.jpg",
-      title: "凛冬将至",
-      description: "人唯有恐惧的时候方能勇敢",
-    },
-    {
       id: "2",
       midImg: "http://mdrs.yuanjin.tech/img/20201031205550.jpg",
       bigImg: "http://mdrs.yuanjin.tech/img/20201031205551.jpg",

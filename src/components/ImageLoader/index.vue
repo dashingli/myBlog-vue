@@ -23,7 +23,7 @@ export default {
     },
     duration:{
       type:Number,
-      default:5000
+      default:1000
     }
   },
   data(){

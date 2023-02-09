@@ -7,12 +7,21 @@
         class="banner-item"
         :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
       >
+        <div
+          class="title-wrapper"
+          :style="{
+            top: i * wrapperHeight + wrapperHeight / 2 + 'px',
+          }"
+        >
+          <h1 ref="titleRef">{{ bannerItem.title }}</h1>
+          <h2 ref="desc">{{ bannerItem.description }}</h2>
+        </div>
+
         <ImageLoader
           :src="bannerItem.bigImg"
           :placeholder="bannerItem.midImg"
           class="image-loader"
         ></ImageLoader>
-        <!-- <img :src="bannerItem.bigImg" /> -->
       </div>
     </div>
     <div
@@ -83,7 +92,9 @@ export default {
         //是否正处于滚动中
         isWheel : false,
         //marginTop
-        marginTop:0
+        marginTop:0,
+        //title宽度
+        titleWidth:0,
       }
     },
     methods:{
@@ -140,6 +151,28 @@ export default {
   overflow: hidden;
   @iconFontSize: 2em;
   .banner-wrapper {
+    position: relative;
+    .title-wrapper {
+      position: absolute;
+      transform: translateY(-50%);
+      z-index: 999;
+      color: #fff;
+      margin-left: 20px;
+      @fontWeight: 400;
+      h1 {
+        font-weight: @fontWeight;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        width: 0;
+        overflow: hidden;
+        transition: width 1s linear;
+      }
+      h2 {
+        font-weight: @fontWeight;
+        font-size: 19px;
+        letter-spacing: 5px;
+      }
+    }
     .banner-item {
       width: 100%;
       height: 100%;
@@ -168,7 +201,7 @@ export default {
     .active {
       background-color: @words;
       border: 1px solid #fff;
-      transition: background-color 500ms linear;
+      transition: background-color 1000ms linear;
     }
   }
   @animationDuration: 5000ms;
