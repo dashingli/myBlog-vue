@@ -16,7 +16,7 @@
           <h1 ref="titleRef">
             {{ bannerItem.title }}
           </h1>
-          <h2 ref="desc">{{ bannerItem.description }}</h2>
+          <h2 ref="descRef">{{ bannerItem.description }}</h2>
         </div>
 
         <ImageLoader
@@ -79,6 +79,7 @@ export default {
   },
   destroyed(){
     window.removeEventListener('wheel',this.wheelChanged);
+    clearTimeout(this.timeout);
   },
   data(){
       return {
@@ -99,6 +100,10 @@ export default {
         marginTop:0,
         //title宽度
         titleWidth:0,
+        //desc宽度
+        descWidth:0,
+        //文字desc计时器id
+        timeId:undefined
       }
     },
     methods:{
@@ -139,6 +144,17 @@ export default {
       this.mesType = 'success';
       this.msgContent = '获取消息成功';
       this.bannerList = res.data;
+      this.$nextTick(function(){
+        this.titleWidth = this.$refs.titleRef[0].clientWidth;
+        this.$refs.titleRef[0].style.width = `0px`;
+        this.$refs.titleRef[0].clientHeight;
+        this.$refs.titleRef[0].style.width = `${this.titleWidth}px`;
+        this.descWidth = this.$refs.descRef[0].clientWidth;
+        this.$refs.descRef[0].style.width = `0px`;
+        this.timeId = setTimeout(()=>{
+        this.$refs.descRef[0].clientHeight;
+        this.$refs.descRef[0].style.width = `${this.descWidth}px`;},1500)
+      })
     }
     this.isMessage = true
     setTimeout(()=>(this.isMessage = false),this.duration)
@@ -166,11 +182,17 @@ export default {
       h1 {
         font-weight: @fontWeight;
         margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: width 3s linear;
       }
       h2 {
         font-weight: @fontWeight;
         font-size: 19px;
         letter-spacing: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: width 3s linear;
       }
     }
     .banner-item {
