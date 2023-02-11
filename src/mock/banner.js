@@ -14,7 +14,7 @@ Mock.mock("/api/banner", "get", {
       id: "3",
       midImg: "http://mdrs.yuanjin.tech/img/20201031204401.jpg",
       bigImg: "http://mdrs.yuanjin.tech/img/20201031204403.jpg",
-      title: "听我怒吼",
+      title: "123",
       description: "兰尼斯特有债必偿",
     },
     {
@@ -28,7 +28,7 @@ Mock.mock("/api/banner", "get", {
       id: "5",
       midImg: "http://mdrs.yuanjin.tech/img/20201031204401.jpg",
       bigImg: "http://mdrs.yuanjin.tech/img/20201031204403.jpg",
-      title: "听我怒吼",
+      title: "123",
       description: "兰尼斯特有债必偿",
     },
   ],

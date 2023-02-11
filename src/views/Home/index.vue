@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper" ref="homeWrapper">
+  <div class="home-wrapper" ref="homeWrapper" v-loading="isLoading">
     <div class="banner-wrapper">
       <div
         v-for="(bannerItem, i) in bannerList"
@@ -7,10 +7,13 @@
         class="banner-item"
         :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
       >
+        <div class="time">
+          <span>{{ time }}</span>
+        </div>
         <div
           class="title-wrapper"
           :style="{
-            top: i * wrapperHeight + wrapperHeight / 2 + 'px',
+            top: wrapperHeight / 2 + 'px',
           }"
         >
           <h1 ref="titleRef">
@@ -64,22 +67,48 @@ import Message from '@/components/Message'
 import {getBanner} from '@/api/banner.js'
 import Icon from '@/components/Icon'
 import ImageLoader from '@/components/ImageLoader'
+import LoadingUrl from '@/assets/loading.svg'
 export default {
+  directives:{
+    loading:{
+      bind:function(el,binding){
+        if(binding.value){
+          const img = document.createElement("img");
+          img.src = LoadingUrl;
+          img.className = "loading";
+          img.style.position = "absolute";
+          img.style.top = "50%";
+          img.style.left = "50%";
+          img.style.transform = "translate(-50%, -50%)";
+          el.appendChild(img);
+        }
+      },
+      update:function(el,binding){
+        if(!binding.value){
+          const img = document.querySelector('.loading');
+          img.remove();
+        }
+      }
+
+    }
+  },
   computed:{
     caculMarginTop(){
       return -((this.index - 1) * this.wrapperHeight)
-    }
+    },
   },
   mounted(){
-    console.log(this.$refs.titleRef)
-    console.log(this.$refs)
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
+    this.timeId = setInterval(()=>{
+        this.time =new Date().toLocaleString()
+      },1000)
     window.addEventListener('wheel',this.wheelChanged);
     window.addEventListener('resize',this.resizeChanged);
   },
   destroyed(){
     window.removeEventListener('wheel',this.wheelChanged);
-    clearTimeout(this.timeout);
+    clearTimeout(this.descTimeId);
+    clearInterval(this.timeId);
   },
   data(){
       return {
@@ -103,7 +132,13 @@ export default {
         //desc宽度
         descWidth:0,
         //文字desc计时器id
-        timeId:undefined
+        descTimeId:undefined,
+        //时间
+        time:"",
+        //时间 计时器id
+        timeId:undefined,
+        //是否加载中
+        isLoading:true,
       }
     },
     methods:{
@@ -137,6 +172,7 @@ export default {
   //注入前 获取bannerList 判断data.code => 显示消息类型
   async created(){
     const res = await getBanner();
+    this.isLoading = false;
     if(res.code !== 0){
       this.mesType = 'error';
       this.msgContent = '获取消息失败'
@@ -151,7 +187,7 @@ export default {
         this.$refs.titleRef[0].style.width = `${this.titleWidth}px`;
         this.descWidth = this.$refs.descRef[0].clientWidth;
         this.$refs.descRef[0].style.width = `0px`;
-        this.timeId = setTimeout(()=>{
+        this.descTimeId = setTimeout(()=>{
         this.$refs.descRef[0].clientHeight;
         this.$refs.descRef[0].style.width = `${this.descWidth}px`;},1500)
       })
@@ -165,6 +201,12 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 .home-wrapper {
   position: relative;
   height: 100vh;
@@ -199,6 +241,15 @@ export default {
       width: 100%;
       height: 100%;
       transition: margin-top 0.5s linear;
+      position: relative;
+      .time {
+        position: absolute;
+        z-index: 999;
+        right: 10px;
+        top: 10px;
+        font-size: 30px;
+        -webkit-text-stroke: 2px;
+      }
       .image-loader {
         display: block;
         width: 100%;
@@ -226,6 +277,7 @@ export default {
       transition: background-color 1000ms linear;
     }
   }
+
   @animationDuration: 5000ms;
   .uparrow-wrapper {
     position: absolute;
