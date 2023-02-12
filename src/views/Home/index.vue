@@ -2,7 +2,7 @@
   <div class="home-wrapper" ref="homeWrapper" v-loading="isLoading">
     <div class="banner-wrapper">
       <div
-        v-for="(bannerItem, i) in bannerList"
+        v-for="(bannerItem, i) in apiData"
         :key="i"
         class="banner-item"
         :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
@@ -38,7 +38,7 @@
     </div>
     <div
       class="arrowdown-wrapper"
-      v-show="index < bannerList.length"
+      v-show="index < apiData.length"
       @click="indexChanged(index + 1)"
     >
       <Icon name="arrowDown"></Icon>
@@ -46,7 +46,7 @@
     <div class="index-wrapper">
       <ul @transitionend="handleTransitionEnd">
         <li
-          v-for="(banner, i) in bannerList"
+          v-for="(banner, i) in apiData"
           :key="banner.id"
           :class="{ active: i === index - 1 }"
           @click="indexChanged(i + 1)"
@@ -68,7 +68,9 @@ import {getBanner} from '@/api/banner.js'
 import Icon from '@/components/Icon'
 import ImageLoader from '@/components/ImageLoader'
 import LoadingUrl from '@/assets/loading.svg'
+import mixinFetchData from '@/mixin/fetchData.js'
 export default {
+  mixins:[mixinFetchData()],
   directives:{
     loading:{
       bind:function(el,binding){
@@ -76,17 +78,16 @@ export default {
           const img = document.createElement("img");
           img.src = LoadingUrl;
           img.className = "loading";
-          img.style.position = "absolute";
-          img.style.top = "50%";
-          img.style.left = "50%";
-          img.style.transform = "translate(-50%, -50%)";
           el.appendChild(img);
         }
       },
       update:function(el,binding){
         if(!binding.value){
           const img = document.querySelector('.loading');
-          img.remove();
+          if(img){
+            img.remove();
+          }
+
         }
       }
 
@@ -117,8 +118,6 @@ export default {
         duration:1000,//Message组件显示多久
         mesType : 'success',//Messagea组件是什么类型的  'success' | 'error' | 'warn' | 'info'
         msgContent:'获取消息成功',//Message组件消息内容
-        //banner API 返回的data数据
-        bannerList:[],
         //index 表示展示的是第几个数据
         index:1,
         //当前组件容器高度
@@ -137,8 +136,6 @@ export default {
         time:"",
         //时间 计时器id
         timeId:undefined,
-        //是否加载中
-        isLoading:true,
       }
     },
     methods:{
@@ -149,7 +146,7 @@ export default {
         if(event.deltaY < -5 && this.index >1){
           this.isWheel = true;
           this.index = this.index - 1;
-        }else if(event.deltaY > 5 && this.index < this.bannerList.length){
+        }else if(event.deltaY > 5 && this.index < this.apiData.length){
           this.isWheel = true;
           this.index = this.index + 1;
         }
@@ -169,7 +166,7 @@ export default {
     Icon,
     ImageLoader
   },
-  //注入前 获取bannerList 判断data.code => 显示消息类型
+  //注入前 获取apiData 判断data.code => 显示消息类型
   async created(){
     const res = await getBanner();
     this.isLoading = false;
@@ -179,7 +176,7 @@ export default {
     }else{
       this.mesType = 'success';
       this.msgContent = '获取消息成功';
-      this.bannerList = res.data;
+      this.apiData = res.data;
       this.$nextTick(function(){
         this.titleWidth = this.$refs.titleRef[0].clientWidth;
         this.$refs.titleRef[0].style.width = `0px`;
@@ -201,7 +198,7 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
-.loading {
+.home-wrapper :deep(.loading) {
   position: absolute;
   left: 50%;
   top: 50%;
