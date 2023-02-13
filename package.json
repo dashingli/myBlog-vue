@@ -15,7 +15,8 @@
     "test:Menu": "npx vue serve --open ./src/components/Menu/test.vue",
     "test:SiteAside": "npx vue serve --open ./src/components/SiteAside/test.vue",
     "test:Layout": "npx vue serve --open ./src/components/Layout/test.vue",
-    "test:Message": "npx vue serve --open ./src/components/Message/test.vue"
+    "test:Message": "npx vue serve --open ./src/components/Message/test.vue",
+    "test:rightList": "npx vue serve --open ./src/views/Blog/components/rightList/test.vue"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
