@@ -1,5 +1,5 @@
 <template>
-  <div class="blogList-wrapper">
+  <div class="blogList-wrapper" ref="blogWrapper">
     <ul>
       <li v-for="blog in blogList.data.rows" :key="blog.id">
         <img v-if="blog.thumb !== null" :src="blog.thumb" alt="" />
@@ -57,8 +57,8 @@ export default {
   },
   watch:{
     async $route(){
+      this.$refs.blogWrapper.scrollTop = 0;
       this.isLoading = true;
-    //  this.$refs.blogWrapper.documentElement.scrollTop = 0;
     this.blogList = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
       this.isLoading = false;
     }
@@ -115,6 +115,7 @@ export default {
   overflow: scroll;
   height: 100vh;
   position: relative;
+  scroll-behavior: smooth;
   .loading {
     position: absolute;
     left: 50%;
