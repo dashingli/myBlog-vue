@@ -10,7 +10,7 @@ export async function getBlogType() {
  * 分页获取博客
  *
  */
-export async function getBlog(page = 1, limit = 10, categoryid = -1) {
+export async function getBlog(page = 1, limit = 30, categoryid = -1) {
   return await instance.get("/api/blog", {
     params: {
       page: page,
