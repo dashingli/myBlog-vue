@@ -1,7 +1,7 @@
 <template>
   <div class="blogList-wrapper">
     <ul>
-      <li v-for="(blog, i) in blogList" :key="i">
+      <li v-for="blog in blogList.data.rows" :key="blog.id">
         <img v-if="blog.thumb !== null" :src="blog.thumb" alt="" />
         <div class="title-wrapper">
           <h2>
@@ -19,9 +19,9 @@
         </div>
       </li>
       <Pager
-        v-if="total !== 0"
+        v-if="blogList.data.total !== 0"
         :current="routeInfo.page"
-        :total="total"
+        :total="blogList.data.total"
         v-on:changeCurrent="handleChangeCurrent"
         v-on:changeJump="handleChangeJump"
       ></Pager>
@@ -52,8 +52,15 @@ export default {
   data(){
     return{
       isLoading:true,
-      blogList:[],
-      total:0
+      blogList:{data:{rows:[],total:0}},
+    }
+  },
+  watch:{
+    async $route(){
+      this.isLoading = true;
+    //  this.$refs.blogWrapper.documentElement.scrollTop = 0;
+    this.blogList = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
+      this.isLoading = false;
     }
   },
   methods:{
@@ -92,12 +99,10 @@ export default {
     }
   },
   async created(){
-    const res = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
-    this.total = await res.data.total;
-    const rows = await res.data.rows;
-    this.blogList = rows;
+    this.blogList  = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
+
     this.isLoading = false;
-    console.log("getBlog",res);
+    console.log("getBlog", this.blogList);
     console.log(this.$route);
   },
 
