@@ -18,6 +18,12 @@
           </p>
         </div>
       </li>
+      <Pager
+        :current="current"
+        :total="total"
+        v-on:changeCurrent="handleChangeCurrent"
+        v-on:changeJump="handleChangeJump"
+      ></Pager>
     </ul>
     <img class="loading" v-show="isLoading" src="@/assets/loading.svg" alt="" />
   </div>
@@ -25,12 +31,17 @@
 
 <script lang="js">
 import {getBlog} from '@/api/blog.js';
-
+import Pager from '@/components/Pager';
 export default {
+  components:{
+    Pager
+  },
   data(){
     return{
       isLoading:true,
-      blogList:[]
+      blogList:[],
+      total:0,
+      current:1,
 
     }
   },
@@ -41,15 +52,23 @@ export default {
       const month = date.getMonth()+1;
       const day = date.getDate();
       return `${year}-${month}-${day}`
+    },
+    handleChangeCurrent(val){
+      this.current = val;
+    },
+    handleChangeJump(val){
+      this.current = val;
     }
   },
   async created(){
     const res = await getBlog();
+    this.total = await res.data.total;
     const rows = await res.data.rows;
     this.blogList = rows;
     this.isLoading = false;
     console.log("getBlog",res);
-  }
+  },
+
 }
 </script>
 
@@ -82,6 +101,13 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      h2 {
+        cursor: pointer;
+        display: contents;
+        &:hover {
+          color: @primary;
+        }
+      }
       span {
         color: @gray;
         font-size: 12px;
