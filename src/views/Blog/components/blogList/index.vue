@@ -19,7 +19,8 @@
         </div>
       </li>
       <Pager
-        :current="current"
+        v-if="total !== 0"
+        :current="routeInfo.page"
         :total="total"
         v-on:changeCurrent="handleChangeCurrent"
         v-on:changeJump="handleChangeJump"
@@ -33,6 +34,18 @@
 import {getBlog} from '@/api/blog.js';
 import Pager from '@/components/Pager';
 export default {
+  computed:{
+    routeInfo(){
+      const page = +this.$route.query.page || 1;
+      const limit = +this.$route.query.limit || 10;
+      const categoryId = +this.$route.params.categoryId || -1;
+      return {
+        page,
+        limit,
+        categoryId,
+      }
+    }
+  },
   components:{
     Pager
   },
@@ -40,33 +53,52 @@ export default {
     return{
       isLoading:true,
       blogList:[],
-      total:0,
-      current:1,
-
+      total:0
     }
   },
   methods:{
     getDate(time){
       const date = new Date(+time);
       const year = date.getFullYear();
-      const month = date.getMonth()+1;
-      const day = date.getDate();
+      const month = (date.getMonth()+1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`
     },
-    handleChangeCurrent(val){
-      this.current = val;
+    handleChangeCurrent(newPage){
+      const query = {
+        page:newPage,
+        limit:this.routeInfo.limit,
+      }
+      if(this.routeInfo.categoryId === -1){
+        this.$router.push({name: 'blog',query})
+      }else{
+        this.$router.push({name:'blogCategory',params:{
+          categoryId:this.routeInfo.categoryId
+        },query})
+      }
     },
-    handleChangeJump(val){
-      this.current = val;
+    handleChangeJump(newPage){
+      const query = {
+        page:newPage,
+        limit:this.routeInfo.limit,
+      }
+      if(this.routeInfo.categoryId === -1){
+        this.$router.push({name: 'blog',query})
+      }else{
+        this.$router.push({name:'blogCategory',params:{
+          categoryId:this.routeInfo.categoryId
+        },query})
+      }
     }
   },
   async created(){
-    const res = await getBlog();
+    const res = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
     this.total = await res.data.total;
     const rows = await res.data.rows;
     this.blogList = rows;
     this.isLoading = false;
     console.log("getBlog",res);
+    console.log(this.$route);
   },
 
 }

@@ -11,6 +11,7 @@ export async function getBlogType() {
  *
  */
 export async function getBlog(page = 1, limit = 10, categoryid = -1) {
+  console.log(page, limit, categoryid);
   return await instance.get("/api/blog", {
     params: {
       page: page,
