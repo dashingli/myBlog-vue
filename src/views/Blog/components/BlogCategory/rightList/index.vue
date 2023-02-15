@@ -33,14 +33,16 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
-ul {
-  list-style: none;
-  line-height: 40px;
-  padding: 0;
-  margin-left: 20px;
-  cursor: pointer;
-}
-.select {
-  color: @warn;
+.rightList-wrapper {
+  ul {
+    list-style: none;
+    line-height: 40px;
+    padding: 0;
+    margin-left: 20px;
+    cursor: pointer;
+    .select {
+      color: @warn;
+    }
+  }
 }
 </style>

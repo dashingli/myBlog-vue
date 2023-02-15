@@ -59,7 +59,7 @@ export default {
     async $route(){
       this.$refs.blogWrapper.scrollTop = 0;
       this.isLoading = true;
-    this.blogList = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
+      this.blogList = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
       this.isLoading = false;
     }
   },
