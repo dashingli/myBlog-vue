@@ -150,6 +150,9 @@ export default {
       gap: 10px;
       h2 {
         color: @words;
+        &:hover {
+          color: @warn;
+        }
       }
       span {
         color: @gray;

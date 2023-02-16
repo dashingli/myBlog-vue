@@ -44,6 +44,9 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
+.rightList-wrapper {
+  width: 300px;
+}
 ul {
   list-style: none;
   cursor: pointer;
