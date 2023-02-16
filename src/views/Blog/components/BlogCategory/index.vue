@@ -1,7 +1,7 @@
 <template>
   <div class="BlogCategory-wrapper">
     <h2>文章分类</h2>
-    <rightList :dataList="dataList.data"></rightList>
+    <rightList :dataList="list" @handleClick="handleClick"></rightList>
     <img
       class="loading-img"
       v-show="isLoading"
@@ -15,9 +15,47 @@
 import rightList from './rightList'
 import {getBlogType} from '@/api/blog.js'
 export default {
+  methods:{
+    handleClick(item){
+      if(this.cateId === item.id){
+        return;
+      }
+      const query = {
+            page:1,
+            limit:this.limit
+          }
+      if(item.id === -1){
+        this.$router.push({
+          name:'blog',
+          query
+        })
+      }else{
+        this.$router.push({
+          name:'blogCategory',
+          query,
+          params:{
+            categoryId:item.id
+          }
+        })
+      }
+    }
+  },
+  computed:{
+    cateId(){
+      return +this.$route.params.categoryId || -1;
+    },
+    limit(){
+      return +this.$route.query.limit || 10;
+    },
+    list(){
+      const total = this.data.reduce((a,b)=>{return a+b.articleCount},0);
+      const result = [{articleCount:total,id:-1,name:"全部文章"},...this.data];
+      return result.map((it)=>{return  {select:it.id === this.cateId,aside:`${it.articleCount}篇`,...it}});
+    }
+  },
     data(){
         return {
-            dataList:[],
+            data:[],
             isLoading:true,
         }
     },
@@ -25,7 +63,9 @@ export default {
         rightList
     },
     async created(){
-        this.dataList = await getBlogType();
+       const res = await getBlogType();
+       this.data = res.data;
+       console.log(res.data);
         this.isLoading = false;
     }
 }

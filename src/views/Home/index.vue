@@ -108,6 +108,7 @@ export default {
   },
   destroyed(){
     window.removeEventListener('wheel',this.wheelChanged);
+    window.removeEventListener('resize',this.resizeChanged);
     clearTimeout(this.descTimeId);
     clearInterval(this.timeId);
   },

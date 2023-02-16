@@ -16,7 +16,6 @@ export default {
   },
   methods:{
     handleImage(){
-      console.log("完成");
     }
   }
 }

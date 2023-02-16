@@ -100,10 +100,7 @@ export default {
   },
   async created(){
     this.blogList  = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
-
     this.isLoading = false;
-    console.log("getBlog", this.blogList);
-    console.log(this.$route);
   },
 
 }

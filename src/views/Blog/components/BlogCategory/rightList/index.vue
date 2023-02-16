@@ -5,6 +5,13 @@
         <span :class="{ select: item.select }" @click="handleClick(item)">{{
           item.name
         }}</span>
+        <span
+          v-if="item.aside"
+          :class="{ select: item.select }"
+          @click="handleClick(item)"
+        >
+          {{ item.aside }}
+        </span>
         <rightList
           :dataList="item.children"
           @handleClick="handleClick"

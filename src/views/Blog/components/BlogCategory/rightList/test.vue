@@ -9,7 +9,6 @@ import rightList from './'
 export default {
     methods:{
         handleClick(val){
-            console.log(val)
         }
     },
     components:{

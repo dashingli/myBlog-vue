@@ -99,8 +99,6 @@ export default {
         },
         clickJump(){
           const jumpNumber = parseInt(this.$refs.jumpNumber.value);
-          console.log(jumpNumber)
-          console.log(typeof jumpNumber)
           if(jumpNumber < 1){
             return
           }

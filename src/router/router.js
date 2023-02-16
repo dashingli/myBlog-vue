@@ -5,6 +5,7 @@ import Blog from "../views/Blog";
 import About from "../views/About";
 import Message from "../views/Message";
 import Project from "../views/Project";
+import BlogDetail from "../views/Blog/components/Detail";
 Vue.use(VueRouter);
 const routes = [
   { path: "/", component: Home },
@@ -18,6 +19,7 @@ const routes = [
     name: "blogCategory",
     component: Blog,
   },
+  { path: "/blog/:id", name: "BlogDetail", component: BlogDetail },
   { path: "/about", component: About },
   { path: "/message", component: Message },
   { path: "/project", component: Project },
