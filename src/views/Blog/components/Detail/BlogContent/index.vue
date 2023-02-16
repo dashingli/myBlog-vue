@@ -1,5 +1,5 @@
 <template>
-  <div class="blogContent-wrapper">
+  <div class="blogContent-wrapper markdown-body">
     <h2>{{ data.title }}</h2>
     <span>日期:{{ data.createDate }}</span>
     <span>浏览:{{ data.scanNumber }}</span>
@@ -10,6 +10,8 @@
 </template>
 
 <script lang="js">
+import 'github-markdown-css/github-markdown-light.css';
+import 'highlight.js/styles/nord.css'
 export default {
   props:{
     data:{
@@ -24,5 +26,15 @@ export default {
 .blogContent-wrapper {
   height: 100vh;
   overflow-y: scroll;
+  margin-top: 20px;
+  margin-left: 20px;
+  scroll-behavior: smooth;
+  span {
+    font-size: 12px;
+    padding-right: 20px;
+  }
+  .main-content-wrapper {
+    margin-top: 20px;
+  }
 }
 </style>

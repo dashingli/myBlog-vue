@@ -46,12 +46,14 @@ export default {
 @import "~@/style/var.less";
 .rightList-wrapper {
   width: 300px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 ul {
   list-style: none;
   cursor: pointer;
   li {
-    padding-top: 20px;
+    margin-top: 10px;
   }
   .name-item {
     font-size: 14px;
