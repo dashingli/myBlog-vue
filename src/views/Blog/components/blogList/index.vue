@@ -2,15 +2,24 @@
   <div class="blogList-wrapper" ref="blogWrapper">
     <ul>
       <li v-for="blog in blogList.data.rows" :key="blog.id">
-        <img v-if="blog.thumb !== null" :src="blog.thumb" alt="" />
+        <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }"
+          ><img v-if="blog.thumb !== null" :src="blog.thumb" alt=""
+        /></router-link>
         <div class="title-wrapper">
-          <h2>
-            {{ blog.title }}
-          </h2>
+          <router-link
+            :to="{ name: 'BlogDetail', params: { id: blog.id } }"
+            active-class="active-link"
+          >
+            <h2>
+              {{ blog.title }}
+            </h2>
+          </router-link>
           <div class="content-wrapper">
             <span>日期：{{ getDate(blog.createDate) }}</span>
             <span>浏览：{{ blog.scanNumber }}</span>
-            <span>评论：{{ blog.commentNumber }}</span>
+            <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }"
+              ><span>评论：{{ blog.commentNumber }}</span></router-link
+            >
             <span>{{ blog.category.name }}</span>
           </div>
           <p>
@@ -108,6 +117,9 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
+.active-link {
+  color: @primary;
+}
 .blogList-wrapper {
   overflow: scroll;
   height: 100vh;
@@ -137,11 +149,7 @@ export default {
       flex-direction: column;
       gap: 10px;
       h2 {
-        cursor: pointer;
-        display: contents;
-        &:hover {
-          color: @primary;
-        }
+        color: @words;
       }
       span {
         color: @gray;

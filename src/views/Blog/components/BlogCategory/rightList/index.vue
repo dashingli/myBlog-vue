@@ -2,11 +2,15 @@
   <div class="rightList-wrapper">
     <ul>
       <li v-for="(item, i) in dataList" :key="i">
-        <span :class="{ select: item.select }" @click="handleClick(item)">{{
-          item.name
-        }}</span>
+        <span
+          class="name-item"
+          :class="{ select: item.select }"
+          @click="handleClick(item)"
+          >{{ item.name }}</span
+        >
         <span
           v-if="item.aside"
+          class="aside-item"
           :class="{ select: item.select }"
           @click="handleClick(item)"
         >
@@ -40,16 +44,23 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
-.rightList-wrapper {
-  ul {
-    list-style: none;
-    line-height: 40px;
-    padding: 0;
-    margin-left: 20px;
-    cursor: pointer;
-    .select {
-      color: @warn;
-    }
+ul {
+  list-style: none;
+  cursor: pointer;
+  li {
+    padding-top: 20px;
+  }
+  .name-item {
+    font-size: 14px;
+  }
+  .aside-item {
+    font-size: 12px;
+    color: @gray;
+    margin-left: 1em;
+  }
+  .select {
+    color: @warn;
+    font-weight: bold;
   }
 }
 </style>

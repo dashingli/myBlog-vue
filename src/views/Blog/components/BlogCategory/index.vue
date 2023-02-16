@@ -72,7 +72,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+h2 {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1em;
+  margin: 0;
+}
 .BlogCategory-wrapper {
+  padding: 20px;
   width: 300px;
   height: 100vh;
   overflow: scroll;
