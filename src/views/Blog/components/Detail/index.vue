@@ -27,7 +27,7 @@ export default {
   components:{
     Layout,
     BlogContent,
-    rightList
+    rightList,
   },
   data(){
     return{

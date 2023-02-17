@@ -82,7 +82,8 @@ h2 {
   padding: 20px;
   width: 300px;
   height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
   .loading-img {
     position: absolute;

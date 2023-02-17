@@ -31,6 +31,7 @@ export default {
 <style lang="less" scoped>
 @import "~@/style/var.less";
 .site-aside-wrapper {
+  overflow-x: hidden;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
