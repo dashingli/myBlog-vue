@@ -12,7 +12,7 @@
             <span>{{ comment.nickname }}</span>
           </div>
           <div class="date">
-            <span>{{ comment.createDate }}</span>
+            <span>{{ dateFormat(comment.createDate, true) }}</span>
           </div>
         </div>
         <div class="comment-main">
@@ -25,7 +25,11 @@
 
 <script lang="js">
 import Avater from '@/components/Avater'
+import dateFormat from '@/utils/dateFormat.js'
 export default {
+  methods:{
+    dateFormat
+  },
   props:{
     commentList:{
       type:Array,
