@@ -1,5 +1,8 @@
 <template>
-  <div class="avater-wrapper">
+  <div
+    class="avater-wrapper"
+    :style="{ minWidth: width + 'px', minHeight: width + 'px' }"
+  >
     <img
       :src="url"
       class="avatar-img"

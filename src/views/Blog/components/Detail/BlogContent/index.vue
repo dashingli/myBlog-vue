@@ -6,7 +6,13 @@
     <span>评论:{{ data.commentNumber }}</span>
     <span>{{ data.category.name }}</span>
     <div class="main-content-wrapper" v-html="data.htmlContent"></div>
-    <MessageArea></MessageArea>
+    <MessageArea
+      v-if="commentList.length !== 0"
+      title="评论列表"
+      :commentTotal="commentNumber"
+      :commentList="commentList"
+      @submit="handleSubmit"
+    ></MessageArea>
   </div>
 </template>
 
@@ -15,7 +21,32 @@ import 'github-markdown-css/github-markdown-light.css';
 import 'highlight.js/styles/nord.css'
 import dateFormat from '@/utils/dateFormat.js';
 import MessageArea from '@/components/MessageArea';
+import {getComments} from '@/api/blog.js';
 export default {
+  methods:{
+    handleSubmit(comment){
+      console.log(this.commentList);
+      console.log(comment);
+      this.commentList.unshift(comment);
+      this.commentNumber++;
+    },
+    dateFormat
+  },
+  async created(){
+    const res = await getComments(this.page,this.limit,this.$route.params.id);
+    const data = res.data;
+    this.commentList = data.rows;
+    this.commentNumber = data.total;
+    console.log('res getComments',res)
+  },
+  data(){
+    return {
+      commentTotal:0,
+      commentList:[],
+      page:1,
+      limit:10
+    }
+  },
   components:{
     MessageArea
   },
@@ -25,9 +56,6 @@ export default {
       required:true
     }
   },
-  methods:{
-    dateFormat
-  }
 }
 </script>
 

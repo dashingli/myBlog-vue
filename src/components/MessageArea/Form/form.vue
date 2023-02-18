@@ -33,27 +33,46 @@
         </span>
       </div>
       <span class="content-error">{{ contentError }}</span>
-
-      <button>提交</button>
+      <button :class="{ isSubmit: isSubmit }" ref="submitButton">
+        {{ isSubmit ? "正在提交.." : "提交" }}
+      </button>
     </form>
+    <img v-if="isLoading === true" src="../../../assets/loading.svg" />
+    <Message
+      :mesType="mesType"
+      :msgContent="msgContent"
+      :isShow="isMessage"
+      :duration="duration"
+    ></Message>
   </div>
 </template>
 
 <script lang="js">
+import {postComment} from '@/api/blog.js'
+import Message from '@/components/Message'
 export default {
+  components:{
+    Message
+  },
     data(){
         return {
             formBody:{
-                nickname:'',
-                content:'',
-                blogId:this.$route.params.id
+              nickname:'',
+              content:'',
+              blogId:this.$route.params.id
             },
             nickNameError:"",
-            contentError:""
+            contentError:"",
+            isLoading:false,
+            isMessage:false,
+            duration:1000,
+            mesType:'success',
+            msgContent:'评论成功',
+            isSubmit:false,
         }
     },
     methods:{
-        onSubmit(){
+        async onSubmit(){
             if(!this.formBody.nickname){
                 this.nickNameError = '请输入用户名'
             }
@@ -63,7 +82,26 @@ export default {
             if(!this.formBody.nickname || !this.formBody.content){
                 return;
             }
-            console.log("提交表单",this.formBody)
+            this.$refs.submitButton.disabled = true;
+            this.isLoading = true;
+            this.isSubmit = true;
+            const res = await postComment(this.formBody);
+            const data = res.data;
+            this.isMessage = true;
+            if(res.code === 0){
+              this.$emit('submit',data);
+              console.log("评论成功");
+            }else{
+              this.mesType = 'error';
+              this.msgContent = '未知错误,评论失败'
+            }
+            this.formBody.nickname = '';
+            this.formBody.content = '';
+            this.isLoading = false;
+            this.isSubmit = false;
+            this.$refs.submitButton.disabled = false;
+            setTimeout(()=>(this.isMessage = false),this.duration)
+
         }
     }
 }
@@ -72,6 +110,14 @@ export default {
 <style lang="less" scoped>
 @import "~@/style/var.less";
 .form-wrapper {
+  position: relative;
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 10%;
+  }
   .nick-name-error,
   .content-error {
     color: @danger;
@@ -81,6 +127,10 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    .isSubmit {
+      cursor: not-allowed;
+      background-color: @gray;
+    }
     .input-wrapper {
       position: relative;
       width: 50%;

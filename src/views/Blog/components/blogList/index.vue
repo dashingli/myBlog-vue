@@ -28,7 +28,7 @@
         </div>
       </li>
       <Pager
-        v-if="blogList.data.total !== 0"
+        v-if="blogList.data.rows.length !== 0"
         :current="routeInfo.page"
         :total="blogList.data.total"
         v-on:changeCurrent="handleChangeCurrent"
