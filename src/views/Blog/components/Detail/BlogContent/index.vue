@@ -3,12 +3,23 @@
     <h2>{{ data.title }}</h2>
     <span>日期:{{ dateFormat(data.createDate) }}</span>
     <span>浏览:{{ data.scanNumber }}</span>
-    <span>评论:{{ data.commentNumber }}</span>
-    <span>{{ data.category.name }}</span>
+    <a href="#commentList"
+      ><span>评论:{{ data.commentNumber }}</span></a
+    >
+    <router-link
+      :to="{
+        name: 'blogCategory',
+        params: {
+          categoryId: data.category.id,
+        },
+      }"
+      ><span>{{ data.category.name }}</span></router-link
+    >
     <div class="main-content-wrapper" v-html="data.htmlContent"></div>
     <MessageArea
       v-if="commentList.length !== 0"
       title="评论列表"
+      id="commentList"
       :commentTotal="commentNumber"
       :commentList="commentList"
       @submit="handleSubmit"
