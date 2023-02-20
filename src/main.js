@@ -6,6 +6,7 @@ import style from "./style/reset.less";
 import router from "./router/router.js";
 import animated from "animate.css";
 import { getComments } from "@/api/blog.js";
+import "./eventBus";
 getComments().then((r) => console.log(r));
 Vue.use(animated);
 new Vue({

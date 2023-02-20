@@ -1,5 +1,5 @@
 <template>
-  <div class="blogContent-wrapper markdown-body">
+  <div class="blogContent-wrapper markdown-body" ref="container">
     <h2>{{ data.title }}</h2>
     <span>日期:{{ dateFormat(data.createDate) }}</span>
     <span>浏览:{{ data.scanNumber }}</span>
@@ -41,7 +41,11 @@ export default {
       this.commentList.unshift(comment);
       this.commentNumber++;
     },
-    dateFormat
+    dateFormat,
+    handleScroll(){
+      console.log(1)
+      this.$bus.$emit('mainScroll',this.$refs.container);
+    }
   },
   async created(){
     const res = await getComments(this.page,this.limit,this.$route.params.id);
@@ -49,6 +53,13 @@ export default {
     this.commentList = data.rows;
     this.commentNumber = data.total;
     console.log('res getComments',res)
+  },
+
+  mounted(){
+    this.$refs.container.addEventListener('scroll',this.handleScroll)
+  },
+  destroyed(){
+    this.$refs.container.removeEventListener('scroll',this.handleScroll);
   },
   data(){
     return {
