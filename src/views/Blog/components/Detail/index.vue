@@ -9,7 +9,7 @@
       </template>
       <template #right>
         <rightList
-          :dataList="data.toc"
+          :dataList="selectMap"
           v-if="Object.keys(data).length !== 0"
           @handleClick="handleClick"
         ></rightList>
@@ -31,13 +31,25 @@ export default {
   },
   data(){
     return{
-      data:{}
+      data:{},
+      activeAnchor:''
     }
   },
   methods:{
     handleClick(item){
       location.hash = item.anchor
+      this.activeAnchor = item.anchor
       console.log("item",item);
+    }
+  },
+  computed:{
+    selectMap(){
+      // const self = this;
+      const getToc = (toc = []) => {
+        console.log('this',this);
+       return toc.map(it=>({...it,select:it.anchor === this.activeAnchor,children:getToc(it.children)}))
+      }
+      return getToc(this.data.toc);
     }
   },
   async created(){
