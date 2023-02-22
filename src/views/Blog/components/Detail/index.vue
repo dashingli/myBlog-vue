@@ -40,7 +40,7 @@ export default {
     handleClick(item){
       location.hash = item.anchor
       this.activeAnchor = item.anchor
-      console.log("item",item);
+
     },
     setSelect(){
       this.activeAnchor = ''
@@ -65,7 +65,7 @@ export default {
     selectMap(){
       // const self = this;
       const getToc = (toc = []) => {
-        console.log('this',this);
+
        return toc.map(it=>({...it,select:it.anchor === this.activeAnchor,children:getToc(it.children)}))
       }
       return getToc(this.data.toc);
@@ -87,9 +87,8 @@ export default {
   async created(){
     const id = this.$route.params.id;
     const res = await getOneBlog(id);
-    const data = res.data;
     this.data = res.data;
-  console.log("data",data)
+
   this.$bus.$on('mainScroll',this.setSelect)
   },
 }

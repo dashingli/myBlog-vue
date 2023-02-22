@@ -90,7 +90,7 @@ export default {
             this.isMessage = true;
             if(res.code === 0){
               this.$emit('submit',data);
-              console.log("评论成功");
+
             }else{
               this.mesType = 'error';
               this.msgContent = '未知错误,评论失败'

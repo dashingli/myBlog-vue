@@ -65,7 +65,7 @@ export default {
     async created(){
        const res = await getBlogType();
        this.data = res.data;
-       console.log(res.data);
+
         this.isLoading = false;
     }
 }

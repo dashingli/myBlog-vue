@@ -33,17 +33,17 @@ import 'highlight.js/styles/nord.css'
 import dateFormat from '@/utils/dateFormat.js';
 import MessageArea from '@/components/MessageArea';
 import {getComments} from '@/api/blog.js';
+import deBounce from "@/utils/deBounce";
 export default {
   methods:{
     handleSubmit(comment){
-      console.log(this.commentList);
-      console.log(comment);
+
+
       this.commentList.unshift(comment);
       this.commentNumber++;
     },
     dateFormat,
     handleScroll(){
-      console.log(1)
       this.$bus.$emit('mainScroll',this.$refs.container);
     }
   },
@@ -52,11 +52,11 @@ export default {
     const data = res.data;
     this.commentList = data.rows;
     this.commentNumber = data.total;
-    console.log('res getComments',res)
   },
 
   mounted(){
-    this.$refs.container.addEventListener('scroll',this.handleScroll)
+    const setDeBounce =  deBounce(this.handleScroll,50)
+    this.$refs.container.addEventListener('scroll',setDeBounce)
   },
   destroyed(){
     this.$refs.container.removeEventListener('scroll',this.handleScroll);
