@@ -309,7 +309,7 @@ Mock.mock(/^\/api\/comment\/?.+$/, "get", function (option) {
     code: 0,
     msg: "",
     data: {
-      "total|50-200": 0,
+      "total|52": 0,
       [`rows|${query.limit || 10}`]: [
         {
           id: "@guid",
