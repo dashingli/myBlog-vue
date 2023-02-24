@@ -49,6 +49,9 @@ export default {
     this.$bus.$on('TopButtonHandle',this.scrollToTop)
     this.$refs.blogWrapper.addEventListener('scroll',this.scrollCheck)
   },
+  beforeDestroy(){
+    this.$refs.blogWrapper.removeEventListener('scroll',this.scrollCheck)
+  },
   computed:{
     routeInfo(){
       const page = +this.$route.query.page || 1;
@@ -81,12 +84,13 @@ export default {
     }
   },
   methods:{
-    scrollToTop(msg){
-      console.log(msg);
+    scrollToTop(){
+      if(this.$refs.blogWrapper === undefined){
+        return
+      }
       this.$refs.blogWrapper.scrollTop = 0;
     },
     scrollCheck(){
-      console.log('check')
       if(this.$refs.blogWrapper.scrollTop > 200){
         this.isTop = true;
       }else{

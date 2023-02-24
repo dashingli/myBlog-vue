@@ -63,7 +63,6 @@ export default {
       const clientHeight = Math.ceil(dom.clientHeight);
       const scrollHeight = Math.ceil(dom.scrollHeight);
       if(scrollTop + clientHeight === scrollHeight){
-        console.log(2)
         this.getNewComments()
       }
     }
@@ -86,7 +85,7 @@ export default {
     this.$refs.container.addEventListener('scroll',this.scrollEnd)
     this.$refs.container.addEventListener('scroll',this.setDeBounce)
   },
-  destroyed(){
+  beforeDestroy(){
     this.$refs.container.removeEventListener('scroll',this.scrollEnd)
     this.$refs.container.removeEventListener('scroll',this.setDeBounce);
   },
