@@ -1,8 +1,8 @@
 <template>
-  <div class="blog-wrapper">
+  <div class="blog-wrapper" >
     <Layout>
       <template v-slot:main>
-        <div class="main-wrapper">
+        <div class="main-wrapper" ref="blogWrapper">
           <blogList></blogList>
         </div>
       </template>
@@ -23,8 +23,8 @@ export default {
   components:{
     Layout,
     BlogCategory,
-    blogList
-  }
+    blogList,
+  },
 }
 </script>
 

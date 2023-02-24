@@ -36,13 +36,19 @@
       ></Pager>
     </ul>
     <img class="loading" v-show="isLoading" src="@/assets/loading.svg" alt="" />
+    <Top v-show="isTop"></Top>
   </div>
 </template>
 
 <script lang="js">
 import {getBlog} from '@/api/blog.js';
 import Pager from '@/components/Pager';
+import Top from "@/components/Top/index.vue";
 export default {
+  mounted() {
+    this.$bus.$on('TopButtonHandle',this.scrollToTop)
+    this.$refs.blogWrapper.addEventListener('scroll',this.scrollCheck)
+  },
   computed:{
     routeInfo(){
       const page = +this.$route.query.page || 1;
@@ -56,12 +62,14 @@ export default {
     }
   },
   components:{
-    Pager
+    Pager,
+    Top
   },
   data(){
     return{
       isLoading:true,
       blogList:{data:{rows:[],total:0}},
+      isTop:false,
     }
   },
   watch:{
@@ -73,6 +81,18 @@ export default {
     }
   },
   methods:{
+    scrollToTop(msg){
+      console.log(msg);
+      this.$refs.blogWrapper.scrollTop = 0;
+    },
+    scrollCheck(){
+      console.log('check')
+      if(this.$refs.blogWrapper.scrollTop > 200){
+        this.isTop = true;
+      }else{
+        this.isTop = false;
+      }
+    },
     getDate(time){
       const date = new Date(+time);
       const year = date.getFullYear();
