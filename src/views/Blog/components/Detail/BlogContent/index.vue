@@ -1,5 +1,5 @@
 <template>
-  <div class="blogContent-wrapper markdown-body" ref="container">
+  <div class="blogContent-wrapper markdown-body" ref="wrapper">
     <h2>{{ data.title }}</h2>
     <span>日期:{{ dateFormat(data.createDate) }}</span>
     <span>浏览:{{ data.scanNumber }}</span>
@@ -25,6 +25,7 @@
       @submit="handleSubmit"
     ></MessageArea>
     <img v-if="isLoading" src="../../../../../assets/loading.svg">
+    <Top v-show="isTop"></Top>
   </div>
 </template>
 
@@ -35,7 +36,10 @@ import dateFormat from '@/utils/dateFormat.js';
 import MessageArea from '@/components/MessageArea';
 import {getComments} from '@/api/blog.js';
 import deBounce from "@/utils/deBounce";
+import Top from "@/components/Top/index.vue";
+import mixinsTop from '@/mixin/Top'
 export default {
+  mixins:[mixinsTop()],
   methods:{
     handleSubmit(comment){
       this.commentList.unshift(comment);
@@ -43,7 +47,7 @@ export default {
     },
     dateFormat,
     handleScroll(){
-      this.$bus.$emit('mainScroll',this.$refs.container);
+      this.$bus.$emit('mainScroll',this.$refs.wrapper);
     },
    async getNewComments(){
       if(this.page >= this.totalPages){
@@ -58,7 +62,7 @@ export default {
       this.isLoading = false
     },
     scrollEnd(){
-      const dom = this.$refs.container
+      const dom = this.$refs.wrapper
       const scrollTop = Math.ceil(dom.scrollTop);
       const clientHeight = Math.ceil(dom.clientHeight);
       const scrollHeight = Math.ceil(dom.scrollHeight);
@@ -82,12 +86,12 @@ export default {
 
   mounted(){
     this.setDeBounce =  deBounce(this.handleScroll,50)
-    this.$refs.container.addEventListener('scroll',this.scrollEnd)
-    this.$refs.container.addEventListener('scroll',this.setDeBounce)
+    this.$refs.wrapper.addEventListener('scroll',this.scrollEnd)
+    this.$refs.wrapper.addEventListener('scroll',this.setDeBounce)
   },
   beforeDestroy(){
-    this.$refs.container.removeEventListener('scroll',this.scrollEnd)
-    this.$refs.container.removeEventListener('scroll',this.setDeBounce);
+    this.$refs.wrapper.removeEventListener('scroll',this.scrollEnd)
+    this.$refs.wrapper.removeEventListener('scroll',this.setDeBounce);
   },
   data(){
     return {
@@ -99,7 +103,8 @@ export default {
     }
   },
   components:{
-    MessageArea
+    MessageArea,
+    Top
   },
   props:{
     data:{

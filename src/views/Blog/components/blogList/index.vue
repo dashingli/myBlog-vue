@@ -1,5 +1,5 @@
 <template>
-  <div class="blogList-wrapper" ref="blogWrapper">
+  <div class="blogList-wrapper" ref="wrapper">
     <ul>
       <li v-for="blog in blogList.data.rows" :key="blog.id">
         <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }"
@@ -44,14 +44,9 @@
 import {getBlog} from '@/api/blog.js';
 import Pager from '@/components/Pager';
 import Top from "@/components/Top/index.vue";
+import TopMixin from '@/mixin/Top'
 export default {
-  mounted() {
-    this.$bus.$on('TopButtonHandle',this.scrollToTop)
-    this.$refs.blogWrapper.addEventListener('scroll',this.scrollCheck)
-  },
-  beforeDestroy(){
-    this.$refs.blogWrapper.removeEventListener('scroll',this.scrollCheck)
-  },
+  mixins:[TopMixin()],
   computed:{
     routeInfo(){
       const page = +this.$route.query.page || 1;
@@ -72,31 +67,17 @@ export default {
     return{
       isLoading:true,
       blogList:{data:{rows:[],total:0}},
-      isTop:false,
     }
   },
   watch:{
     async $route(){
-      this.$refs.blogWrapper.scrollTop = 0;
+      this.$refs.wrapper.scrollTop = 0;
       this.isLoading = true;
       this.blogList = await getBlog(this.routeInfo.page,this.routeInfo.limit,this.routeInfo.categoryId);
       this.isLoading = false;
     }
   },
   methods:{
-    scrollToTop(){
-      if(this.$refs.blogWrapper === undefined){
-        return
-      }
-      this.$refs.blogWrapper.scrollTop = 0;
-    },
-    scrollCheck(){
-      if(this.$refs.blogWrapper.scrollTop > 200){
-        this.isTop = true;
-      }else{
-        this.isTop = false;
-      }
-    },
     getDate(time){
       const date = new Date(+time);
       const year = date.getFullYear();
