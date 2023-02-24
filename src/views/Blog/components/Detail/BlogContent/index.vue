@@ -59,10 +59,12 @@ export default {
     },
     scrollEnd(){
       const dom = this.$refs.container
-      if(dom.scrollTop + dom.clientHeight === dom.scrollHeight){
+      const scrollTop = Math.ceil(dom.scrollTop);
+      const clientHeight = Math.ceil(dom.clientHeight);
+      const scrollHeight = Math.ceil(dom.scrollHeight);
+      if(scrollTop + clientHeight === scrollHeight){
+        console.log(2)
         this.getNewComments()
-      }else{
-        return
       }
     }
   },
