@@ -3,8 +3,11 @@
     <ul>
       <li v-for="blog in blogList.data.rows" :key="blog.id">
         <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }"
-          ><img v-if="blog.thumb !== null" :src="blog.thumb" alt=""
-        /></router-link>
+          ><div class="image-items-wrapper">
+          <img v-if="blog.thumb !== null" v-lazy="blog.thumb" alt=""
+          />
+        </div>
+         </router-link>
         <div class="title-wrapper">
           <router-link
             :to="{ name: 'BlogDetail', params: { id: blog.id } }"
@@ -130,6 +133,31 @@ export default {
   height: 100vh;
   position: relative;
   scroll-behavior: smooth;
+  .image-items-wrapper{
+    width: 250px;
+    height: 150px;
+    position: relative;
+    img[lazy="loading"]{
+      border-radius:5px;
+      position: absolute;
+      width: 200px;
+      height: 150px;
+      left:50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    img {
+      position: absolute;
+      left:50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+
   .loading {
     position: absolute;
     left: 50%;
@@ -143,12 +171,7 @@ export default {
     align-items: center;
     gap: 10px;
     line-height: 1.7;
-    img {
-      width: 200px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
+
     .title-wrapper {
       display: flex;
       flex-direction: column;
