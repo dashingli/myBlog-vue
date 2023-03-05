@@ -7,6 +7,7 @@ import router from "./router/router.js";
 import animated from "animate.css";
 import VueLazyload from "vue-lazyload";
 import "./eventBus";
+import store from "@/store";
 
 Vue.use(animated);
 const loadImage = require('./assets/Runningheart.gif')
@@ -16,6 +17,7 @@ Vue.use(VueLazyload,{
   attempt:1
 });
 window.vm = new Vue({
+  store,
   render: (h) => h(App),
   router,
 }).$mount("#app");

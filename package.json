@@ -1,5 +1,5 @@
 {
-  "name": "my-site",
+  "name": "lilinzhe-my-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,7 +26,8 @@
     "mockjs": "^1.1.0",
     "vue": "^2.6.11",
     "vue-lazyload": "^1.3.3",
-    "vue-router": "^3.6.5"
+    "vue-router": "^3.6.5",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.8",

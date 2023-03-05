@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper" ref="homeWrapper" v-loading="isLoading">
+  <div class="home-wrapper" ref="homeWrapper" v-loading="$store.state.banner.isLoading">
     <div class="banner-wrapper">
       <div
         v-for="(bannerItem, i) in apiData"
@@ -64,13 +64,11 @@
 
 <script lang="js">
 import Message from '@/components/Message'
-import {getBanner} from '@/api/banner.js'
 import Icon from '@/components/Icon'
 import ImageLoader from '@/components/ImageLoader'
 import LoadingUrl from '@/assets/loading.svg'
-import mixinFetchData from '@/mixin/fetchData.js'
+
 export default {
-  mixins:[mixinFetchData()],
   directives:{
     loading:{
       bind:function(el,binding){
@@ -97,6 +95,9 @@ export default {
     caculMarginTop(){
       return -((this.index - 1) * this.wrapperHeight)
     },
+    apiData(){
+      return this.$store.state.banner.apiData
+    }
   },
   mounted(){
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
@@ -169,15 +170,13 @@ export default {
   },
   //注入前 获取apiData 判断data.code => 显示消息类型
   async created(){
-    const res = await getBanner();
-    this.isLoading = false;
+    const res =  await this.$store.dispatch('banner/getBanner')
     if(res.code !== 0){
       this.mesType = 'error';
       this.msgContent = '获取消息失败'
     }else{
       this.mesType = 'success';
       this.msgContent = '获取消息成功';
-      this.apiData = res.data;
       this.$nextTick(function(){
         this.titleWidth = this.$refs.titleRef[0].clientWidth;
         this.$refs.titleRef[0].style.width = `0px`;
@@ -246,7 +245,7 @@ export default {
         right: 10px;
         top: 10px;
         font-size: 30px;
-        -webkit-text-stroke: 2px;
+
       }
       .image-loader {
         display: block;
