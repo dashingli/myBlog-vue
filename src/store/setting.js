@@ -14,6 +14,13 @@ export default {
         async getDate(ctx){
             const res = await getSetting()
             ctx.commit('setDate',res.data)
+            if(res.data.favicon){
+                const link = document.createElement('link')
+                link.rel = 'shortcut icon'
+                link.href = res.data.favicon
+                link.type = 'image/x-icon'
+                document.querySelector('head').appendChild(link)
+            }
         }
     }
 
