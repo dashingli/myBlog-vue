@@ -20,7 +20,6 @@ export default {
             }
             ctx.commit('setLoading',true)
            const res =  await getBanner()
-            console.log(res)
             const data = res.data
             ctx.commit('setData',data)
             ctx.commit('setLoading',false)

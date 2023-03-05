@@ -1,25 +1,25 @@
 <template>
   <div class="Contact-wrapper">
-    <a href="https://github.com/dashingli?tab=repositories" target="_blank">
+    <a :href="$store.state.setting.data.github" target="_blank">
       <Icon name="github"></Icon>
-      dashingli
+      {{$store.state.setting.data.githubName}}
     </a>
-    <a href="mailto:1120294646@qq.com">
+    <a :href="`mailto:${$store.state.setting.data.mail}`">
       <Icon name="mail"></Icon>
-      1120294646@qq.com
+      {{$store.state.setting.data.mail}}
     </a>
     <a>
       <Icon name="qq"></Icon>
-      1120294646
+      {{$store.state.setting.data.qq}}
       <div class="img-wrapper">
-        <img src="../../img/qq.png" alt="" />
+        <img :src="$store.state.setting.data.qqQrCode" alt="" />
       </div>
     </a>
     <a>
       <Icon name="weixin"></Icon>
-      lilinzhe123
+      {{$store.state.setting.data.weixin}}
       <div class="img-wrapper">
-        <img src="../../img/weixin.jpg" alt="" />
+        <img :src="$store.state.setting.data.weixinQrCode" alt="" />
       </div>
     </a>
   </div>

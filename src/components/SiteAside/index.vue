@@ -1,6 +1,7 @@
 <template>
   <div class="site-aside-wrapper">
-    <Avater url="https://avatars.githubusercontent.com/u/86763297?v=4"></Avater>
+    <Avater :url="$store.state.setting.data.avatar"></Avater>
+
     <span
       :style="{
         color: '#b4b8bc',
@@ -8,7 +9,7 @@
         marginTop: '10px',
         fontSize: '1.1em',
       }"
-      >李林哲的博客</span
+      >{{$store.state.setting.data.siteTitle}}</span
     >
     <Menu></Menu>
     <Contact></Contact>
