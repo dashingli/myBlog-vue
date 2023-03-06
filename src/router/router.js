@@ -31,7 +31,6 @@ const routes = [
 const router = new VueRouter({routes, mode: "history"});
 router.afterEach((to) => {
     const title = document.querySelector('title')
-
     const mainTitle = store.state.setting.data.siteTitle || '个人空间'
     console.log(mainTitle)
     title.innerText = `${mainTitle} ${to.meta.title}`

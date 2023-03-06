@@ -8,7 +8,8 @@ import animated from "animate.css";
 import VueLazyload from "vue-lazyload";
 import "./eventBus";
 import store from "@/store";
-
+import {getAbout} from "@/api/about";
+getAbout().then(res=>{console.log(res)})
 store.dispatch('setting/getDate')
 Vue.use(animated);
 const loadImage = require('./assets/Runningheart.gif')
