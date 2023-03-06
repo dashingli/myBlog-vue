@@ -171,6 +171,9 @@ export default {
   //注入前 获取apiData 判断data.code => 显示消息类型
   async created(){
     const res =  await this.$store.dispatch('banner/getBanner')
+    if(this.$store.state.banner.apiData.length >0){
+      return
+    }
     if(res.code !== 0){
       this.mesType = 'error';
       this.msgContent = '获取消息失败'
