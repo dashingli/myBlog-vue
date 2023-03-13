@@ -2,22 +2,22 @@
   <div class="Contact-wrapper">
     <a :href="$store.state.setting.data.github" target="_blank">
       <Icon name="github"></Icon>
-      {{$store.state.setting.data.githubName}}
+      <span class="font">{{$store.state.setting.data.githubName}}</span>
     </a>
     <a :href="`mailto:${$store.state.setting.data.mail}`">
       <Icon name="mail"></Icon>
-      {{$store.state.setting.data.mail}}
+      <span class="font">{{$store.state.setting.data.mail}}</span>
     </a>
     <a>
       <Icon name="qq"></Icon>
-      {{$store.state.setting.data.qq}}
+      <span class="font">{{$store.state.setting.data.qq}}</span>
       <div class="img-wrapper">
         <img :src="$store.state.setting.data.qqQrCode" alt="" />
       </div>
     </a>
     <a>
       <Icon name="weixin"></Icon>
-      {{$store.state.setting.data.weixin}}
+      <span class="font">{{$store.state.setting.data.weixin}}</span>
       <div class="img-wrapper">
         <img :src="$store.state.setting.data.weixinQrCode" alt="" />
       </div>
@@ -46,11 +46,19 @@ export default {
   flex-direction: column;
   border-color: transparent;
   margin-top: 40px;
+  .font{
+    display: inline-block;
+    color: @gray;
+    font-size:15px;
+  }
 }
 a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   color: @gray;
   position: relative;
-  font-size: 1.15em;
+  font-size: 2em;
   padding-left: 10px;
   padding-right: 50px;
   .img-wrapper {
