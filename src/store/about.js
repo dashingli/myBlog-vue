@@ -15,6 +15,9 @@ export default {
     },
     actions:{
         async about(ctx){
+            if(ctx.state.src){
+                return
+            }
             ctx.commit('setLoading',true)
             const res = await getAbout()
             ctx.commit('setSrc',res.data)

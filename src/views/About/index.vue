@@ -1,6 +1,6 @@
 <template>
   <div class="about-wrapper" v-loading="isLoading">
-    <iframe class="iframe-wrapper" @load="isLoading=false" v-if="$store.state.about.src" :src="$store.state.about.src">
+    <iframe class="iframe-wrapper" @load="isLoading=false" v-if="getSrc" :src="getSrc">
 
     </iframe>
   </div>
@@ -10,6 +10,11 @@
 import LoadingUrl from "@/assets/loading.svg";
 
 export default {
+  computed:{
+    getSrc(){
+      return this.$store.state.about.src
+    }
+  },
   data(){
     return {
       isLoading:true
