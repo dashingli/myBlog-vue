@@ -8,10 +8,8 @@ import animated from "animate.css";
 import VueLazyload from "vue-lazyload";
 import "./eventBus";
 import store from "@/store";
-import {getMsg} from "@/api/message";
-import {postMsg} from "@/api/message";
-getMsg().then(r=>console.log(r))
-postMsg().then(r=>console.log(r))
+
+
 store.dispatch('setting/getDate')
 Vue.use(animated);
 const loadImage = require('./assets/default.gif')

@@ -23,6 +23,7 @@
       :commentTotal="commentTotal"
       :commentList="commentList"
       @submit="handleSubmit"
+      :type="1"
     ></MessageArea>
     <img v-if="isLoading" src="../../../../../assets/loading.svg">
     <Top v-show="isTop"></Top>

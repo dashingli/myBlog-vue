@@ -49,10 +49,18 @@
 
 <script lang="js">
 import {postComment} from '@/api/blog.js'
+import {postMsg} from "@/api/message";
 import Message from '@/components/Message'
 export default {
   components:{
     Message
+  },
+  props:{
+    // 1为博客评论,2为留言板评论
+    type:{
+      type:Number,
+      required:true
+    },
   },
     data(){
         return {
@@ -85,7 +93,13 @@ export default {
             this.$refs.submitButton.disabled = true;
             this.isLoading = true;
             this.isSubmit = true;
-            const res = await postComment(this.formBody);
+            let res;
+            if(this.type === 1){
+              res = await postComment(this.formBody);
+            }
+            if(this.type === 2){
+              res = await postMsg(this.formBody)
+            }
             const data = res.data;
             this.isMessage = true;
             if(res.code === 0){

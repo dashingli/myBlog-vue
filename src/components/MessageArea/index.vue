@@ -1,6 +1,6 @@
 <template>
   <div class="message-area-wrapper">
-    <div class="form-wrapper"><Form @submit="handleSubmit"></Form></div>
+    <div class="form-wrapper"><Form @submit="handleSubmit" :type="type"></Form></div>
     <div class="comment-list-wrapper">
       <CommentList
         v-if="commentList.length !== 0"
@@ -33,6 +33,11 @@ export default {
     commentList:{
       type:Array,
       default:()=>[]
+    },
+    // 1为博客评论,2为留言板评论
+    type:{
+      type:Number,
+      required:true
     },
     title:{
       type:String,
