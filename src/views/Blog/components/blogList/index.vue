@@ -38,6 +38,7 @@
         v-on:changeJump="handleChangeJump"
       ></Pager>
     </ul>
+    <Empty v-if="blogList.data.rows.length === 0 && isLoading === false" />
     <img class="loading" v-show="isLoading" src="@/assets/loading.svg" alt="" />
     <Top v-show="isTop"></Top>
   </div>
@@ -48,6 +49,7 @@ import {getBlog} from '@/api/blog.js';
 import Pager from '@/components/Pager';
 import Top from "@/components/Top/index.vue";
 import TopMixin from '@/mixin/Top'
+import Empty from "@/components/Empty/index.vue";
 export default {
   mixins:[TopMixin()],
   computed:{
@@ -64,7 +66,8 @@ export default {
   },
   components:{
     Pager,
-    Top
+    Top,
+    Empty
   },
   data(){
     return{

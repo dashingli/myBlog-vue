@@ -7,7 +7,7 @@ import Message from "../views/Message";
 import Project from "../views/Project";
 import BlogDetail from "../views/Blog/components/Detail";
 import store from "@/store";
-
+import NotFound from "@/views/NotFound/index.vue";
 Vue.use(VueRouter);
 const routes = [
     {path: "/", component: Home, meta: {title: "首页"}},
@@ -27,6 +27,7 @@ const routes = [
     {path: "/about", component: About, meta: {title: "关于我"}},
     {path: "/message", component: Message, meta: {title: "留言"}},
     {path: "/project", component: Project, meta: {title: "项目效果"}},
+    {path: "*",component: NotFound}
 ];
 const router = new VueRouter({routes, mode: "history"});
 router.afterEach((to) => {
