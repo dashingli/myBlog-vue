@@ -1,19 +1,16 @@
 <template>
-  <div class="home-wrapper" ref="homeWrapper" v-loading="$store.state.banner.isLoading">
+  <div class="home-wrapper" ref="homeWrapper">
     <div class="banner-wrapper">
       <div
-        v-for="(bannerItem, i) in apiData"
-        :key="i"
-        class="banner-item"
-        :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
+          v-for="(bannerItem, i) in bannerList"
+          :key="i"
+          class="banner-item"
+          :style="{ marginTop: i === 0 ? `${caculMarginTop}px` : '0px' }"
       >
-        <div class="time">
-          <span>{{ time }}</span>
-        </div>
         <div
-          class="title-wrapper"
-          :style="{
-            top: wrapperHeight / 2 + 'px',
+            class="title-wrapper"
+            :style="{
+            top: i * wrapperHeight + wrapperHeight / 2 + 'px',
           }"
         >
           <h1 ref="titleRef">
@@ -23,163 +20,128 @@
         </div>
 
         <ImageLoader
-          :src="bannerItem.bigImg"
-          :placeholder="bannerItem.midImg"
-          class="image-loader"
+            :src="bannerItem.bigImg"
+            :placeholder="bannerItem.midImg"
+            class="image-loader"
         ></ImageLoader>
       </div>
     </div>
     <div
-      class="uparrow-wrapper"
-      v-show="index > 1"
-      @click="indexChanged(index - 1)"
+        class="uparrow-wrapper"
+        v-show="index > 1"
+        @click="indexChanged(index - 1)"
     >
       <Icon name="arrowUp"></Icon>
     </div>
     <div
-      class="arrowdown-wrapper"
-      v-show="index < apiData.length"
-      @click="indexChanged(index + 1)"
+        class="arrowdown-wrapper"
+        v-show="index < bannerList.length"
+        @click="indexChanged(index + 1)"
     >
       <Icon name="arrowDown"></Icon>
     </div>
     <div class="index-wrapper">
       <ul @transitionend="handleTransitionEnd">
         <li
-          v-for="(banner, i) in apiData"
-          :key="banner.id"
-          :class="{ active: i === index - 1 }"
-          @click="indexChanged(i + 1)"
+            v-for="(banner, i) in bannerList"
+            :key="banner.id"
+            :class="{ active: i === index - 1 }"
+            @click="indexChanged(i + 1)"
         ></li>
       </ul>
     </div>
     <Message
-      :isShow="isMessage"
-      :duration="duration"
-      :mesType="mesType"
-      :msgContent="msgContent"
+        :isShow="isMessage"
+        :duration="duration"
+        :mesType="mesType"
+        :msgContent="msgContent"
     ></Message>
   </div>
 </template>
 
 <script lang="js">
 import Message from '@/components/Message'
+import {getBanner} from '@/api/banner.js'
 import Icon from '@/components/Icon'
 import ImageLoader from '@/components/ImageLoader'
-import LoadingUrl from '@/assets/loading.svg'
-
 export default {
-  directives:{
-    loading:{
-      bind:function(el,binding){
-        if(binding.value){
-          const img = document.createElement("img");
-          img.src = LoadingUrl;
-          img.className = "loading";
-          el.appendChild(img);
-        }
-      },
-      update:function(el,binding){
-        if(!binding.value){
-          const img = document.querySelector('.loading');
-          if(img){
-            img.remove();
-          }
-
-        }
-      }
-
-    }
-  },
   computed:{
     caculMarginTop(){
       return -((this.index - 1) * this.wrapperHeight)
-    },
-    apiData(){
-      return this.$store.state.banner.apiData
     }
   },
   mounted(){
     this.wrapperHeight = this.$refs.homeWrapper.clientHeight;
-    this.timeId = setInterval(()=>{
-        this.time =new Date().toLocaleString()
-      },1000)
     window.addEventListener('wheel',this.wheelChanged);
     window.addEventListener('resize',this.resizeChanged);
   },
   destroyed(){
     window.removeEventListener('wheel',this.wheelChanged);
-    window.removeEventListener('resize',this.resizeChanged);
-    clearTimeout(this.descTimeId);
-    clearInterval(this.timeId);
+    clearTimeout(this.timeout);
   },
   data(){
-      return {
-        //Message组件相关
-        isMessage : false,//Message组件是否显示
-        duration:1000,//Message组件显示多久
-        mesType : 'success',//Messagea组件是什么类型的  'success' | 'error' | 'warn' | 'info'
-        msgContent:'获取消息成功',//Message组件消息内容
-        //index 表示展示的是第几个数据
-        index:1,
-        //当前组件容器高度
-        wrapperHeight:0,
-        //是否正处于滚动中
-        isWheel : false,
-        //marginTop
-        marginTop:0,
-        //title宽度
-        titleWidth:0,
-        //desc宽度
-        descWidth:0,
-        //文字desc计时器id
-        descTimeId:undefined,
-        //时间
-        time:"",
-        //时间 计时器id
-        timeId:undefined,
+    return {
+      //Message组件相关
+      isMessage : false,//Message组件是否显示
+      duration:1000,//Message组件显示多久
+      mesType : 'success',//Messagea组件是什么类型的  'success' | 'error' | 'warn' | 'info'
+      msgContent:'获取消息成功',//Message组件消息内容
+      //banner API 返回的data数据
+      bannerList:[],
+      //index 表示展示的是第几个数据
+      index:1,
+      //当前组件容器高度
+      wrapperHeight:0,
+      //是否正处于滚动中
+      isWheel : false,
+      //marginTop
+      marginTop:0,
+      //title宽度
+      titleWidth:0,
+      //desc宽度
+      descWidth:0,
+      //文字desc计时器id
+      timeId:undefined
+    }
+  },
+  methods:{
+    wheelChanged(event){
+      if(this.isWheel){
+        return;
+      }
+      if(event.deltaY < -5 && this.index >1){
+        this.isWheel = true;
+        this.index = this.index - 1;
+      }else if(event.deltaY > 5 && this.index < this.bannerList.length){
+        this.isWheel = true;
+        this.index = this.index + 1;
       }
     },
-    methods:{
-      wheelChanged(event){
-        if(this.isWheel){
-          return;
-        }
-        if(event.deltaY < -5 && this.index >1){
-          this.isWheel = true;
-          this.index = this.index - 1;
-        }else if(event.deltaY > 5 && this.index < this.apiData.length){
-          this.isWheel = true;
-          this.index = this.index + 1;
-        }
-      },
-      handleTransitionEnd(){
-        this.isWheel = false;
-      },
-      indexChanged(val){
-        this.index = val
-      },
-      resizeChanged(){
+    handleTransitionEnd(){
+      this.isWheel = false;
+    },
+    indexChanged(val){
+      this.index = val
+    },
+    resizeChanged(){
       this.wrapperHeight =  this.$refs.homeWrapper.clientHeight;
     }
-    },
+  },
   components:{
     Message,
     Icon,
     ImageLoader
   },
-  //注入前 获取apiData 判断data.code => 显示消息类型
+  //注入前 获取bannerList 判断data.code => 显示消息类型
   async created(){
-    const res =  await this.$store.dispatch('banner/getBanner')
-    if(this.$store.state.banner.apiData.length >0){
-      return
-    }
+    const res = await getBanner();
     if(res.code !== 0){
       this.mesType = 'error';
       this.msgContent = '获取消息失败'
     }else{
       this.mesType = 'success';
       this.msgContent = '获取消息成功';
+      this.bannerList = res.data;
       this.$nextTick(function(){
         this.titleWidth = this.$refs.titleRef[0].clientWidth;
         this.$refs.titleRef[0].style.width = `0px`;
@@ -187,9 +149,9 @@ export default {
         this.$refs.titleRef[0].style.width = `${this.titleWidth}px`;
         this.descWidth = this.$refs.descRef[0].clientWidth;
         this.$refs.descRef[0].style.width = `0px`;
-        this.descTimeId = setTimeout(()=>{
-        this.$refs.descRef[0].clientHeight;
-        this.$refs.descRef[0].style.width = `${this.descWidth}px`;},1500)
+        this.timeId = setTimeout(()=>{
+          this.$refs.descRef[0].clientHeight;
+          this.$refs.descRef[0].style.width = `${this.descWidth}px`;},1500)
       })
     }
     this.isMessage = true
@@ -201,12 +163,6 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/style/var.less";
-.home-wrapper :deep(.loading) {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
 .home-wrapper {
   position: relative;
   height: 100vh;
@@ -241,15 +197,6 @@ export default {
       width: 100%;
       height: 100%;
       transition: margin-top 0.5s linear;
-      position: relative;
-      .time {
-        position: absolute;
-        z-index: 999;
-        right: 10px;
-        top: 10px;
-        font-size: 30px;
-
-      }
       .image-loader {
         display: block;
         width: 100%;
@@ -277,7 +224,6 @@ export default {
       transition: background-color 1000ms linear;
     }
   }
-
   @animationDuration: 5000ms;
   .uparrow-wrapper {
     position: absolute;
